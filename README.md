@@ -8,4 +8,3 @@ Team members:
 *Thomas Toodo
 
 *Kristjan Eimre
-...
