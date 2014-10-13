@@ -1,7 +1,11 @@
 package ee.ut.math.tvt.KAT;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class Intro {
+	private static final Logger logger = LogManager.getLogger(Intro.class.getName());
 	public static void main(String[] args) {
-		System.out.println("It's alive!");
+		logger.error("I'm alive!");
 	}
 }
