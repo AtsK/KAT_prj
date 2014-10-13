@@ -1,0 +1,5 @@
+<project default="run" name="POS" basedir=".">
+	<target name="run">
+		<echo message="Hello, World!"/>
+	</target>
+</project>

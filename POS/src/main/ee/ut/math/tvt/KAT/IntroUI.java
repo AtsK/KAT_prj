@@ -1,7 +1,6 @@
 package ee.ut.math.tvt.KAT;
 
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 
 public class IntroUI {
