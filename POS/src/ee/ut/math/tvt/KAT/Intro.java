@@ -7,5 +7,9 @@ public class Intro {
 	private static final Logger logger = LogManager.getLogger(Intro.class.getName());
 	public static void main(String[] args) {
 		logger.error("I'm alive!");
+		
+		IntroUI ui = new IntroUI();
+		ui.setVisible(true);
+		
 	}
 }
