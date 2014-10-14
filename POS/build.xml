@@ -8,7 +8,7 @@
 	<property name="classes.dir" location="${build.dir}/classes/" />
 	<property name="jar.dir" location="${build.dir}/jar/" />
 	<property name="lib.dir" location="lib/" />
-	<property name="conf.dir" location="etc/"/>
+	<property name="conf.dir" location="etc/" />
 
 
 	<property name="main-class" value="ee.ut.math.tvt.KAT.Intro" />
@@ -26,9 +26,9 @@
 	<path id="classpath">
 		<path refid="libraries" />
 		<pathelement location="${classes.dir}" />
-		<pathelement location="${conf.dir}"/>
+		<pathelement location="${conf.dir}" />
 	</path>
-	
+
 	<!-- Targets -->
 
 	<target name="clean" description="clean up">
@@ -37,10 +37,7 @@
 
 	<target name="build">
 		<mkdir dir="${classes.dir}" />
-		<javac srcdir="${src.dir}"
-		       destdir="${classes.dir}"
-		       includeantruntime="false"
-		       classpathref="libraries" />
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false" classpathref="libraries" />
 	</target>
 
 	<target name="run" depends="build">
@@ -48,27 +45,36 @@
 		</java>
 	</target>
 
-	<target name="dist" depends="build">
+	<target name="dist" depends="build,rev.number">
 		<mkdir dir="${jar.dir}" />
-
-		<!-- Increase the revision number in version.properties -->
-		<propertyfile file="version.properties" comment="Version properties">
-			<entry key="build.revision.number"
-			       type="int"
-			       default="0"
-			       operation="+" />
-			<entry key="build.minor.number" type="int" default="0" />
-			<entry key="build.major.number" type="int" default="0" />
-		</propertyfile>
 
 		<!-- Include everything in the .jar file -->
 		<jar jarfile="${jar.dir}/${jar.name}.jar" basedir="${classes.dir}">
 			<zipgroupfileset dir="${lib.dir}" includes="**/*.jar" />
-			<fileset dir="${conf.dir}"/>
+			<fileset dir="${conf.dir}" />
+			<fileset dir="." includes="*.properties" />
 			<manifest>
 				<attribute name="Main-Class" value="${main-class}" />
 			</manifest>
 		</jar>
+	</target>
+
+
+	<target name="rev.number">
+		<!-- Increase the revision number in version.properties -->
+		<propertyfile file="version.properties" comment="Version properties">
+			<entry key="build.revision.number" type="int" default="0" operation="+" />
+			<entry key="build.minor.number" type="int" default="0" />
+			<entry key="build.major.number" type="int" default="0" />
+		</propertyfile>
+		
+		<!-- Load the version numbers as properties -->
+		<loadproperties srcfile="version.properties" />
+		
+		<!-- Unify the updated version numbers into build.number -->
+		<propertyfile file="version.properties" comment="Version properties">
+			<entry key="build.number" value="${build.major.number}.${build.minor.number}.${build.revision.number}" />
+		</propertyfile>
 	</target>
 
 	<target name="jrun" depends="dist">
