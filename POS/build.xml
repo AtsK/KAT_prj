@@ -86,13 +86,24 @@
 		<java jar="${jar.dir}/${jar.name}.jar" fork="yes" />
 	</target>
 
-	<target name="git_commit">
+	<target name="git_commit" description="Commit to git">
 		<exec executable="git">
 			<arg line="add -A" />
 		</exec>
 		<input message="Enter commit message:" addproperty="commit.message" defaultvalue="no message" />
 		<exec executable="git">
 			<arg line="commit -m ${commit.message}" />
+		</exec>
+	</target>
+
+	<target name="git_tag">
+		<input message="Enter tag name:" addproperty="tag.name" defaultvalue="no name" />
+		<input message="Enter tag comment:" addproperty="tag.comment" defaultvalue="no comment" />
+		<exec executable="git">
+			<arg line="tag -a ${tag.name} -m  ${tag.comment}" />
+		</exec>
+		<exec executable="git">
+			<arg line="push --tags" />
 		</exec>
 	</target>
 
