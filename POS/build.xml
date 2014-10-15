@@ -16,15 +16,15 @@
 	<property name="version" location="version.properties" />
 
 	<!-- Path reference for external libraries -->
-	<path id="libraries">
+	<path id="compile.classpath">
 		<fileset dir="${lib.dir}">
 			<include name="*.jar" />
 		</fileset>
 	</path>
 
 	<!-- Path reference for external libraries & config files & compiled classes-->
-	<path id="classpath">
-		<path refid="libraries" />
+	<path id="test.classpath">
+		<path refid="compile.classpath" />
 		<pathelement location="${classes.dir}" />
 		<pathelement location="${conf.dir}" />
 	</path>
@@ -35,17 +35,22 @@
 		<delete dir="${build.dir}" />
 	</target>
 
-	<target name="build">
+	<target name="build" description="Build the system">
 		<mkdir dir="${classes.dir}" />
-		<javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false" classpathref="libraries" />
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false" classpathref="compile.classpath" />
 	</target>
 
-	<target name="run" depends="build">
-		<java classname="${main-class}" classpathref="classpath" fork="yes">
+	<target name="run" depends="build" description="Run the application">
+		<java classname="${main-class}" classpathref="test.classpath" fork="yes" />
+	</target>
+
+	<target name="runc" depends="build" description="Run the application (console)">
+		<java classname="ee.ut.math.tvt.[team].Intro" classpathref="test.classpath" fork="yes">
+			<arg value="console" />
 		</java>
 	</target>
 
-	<target name="dist" depends="build,rev.number">
+	<target name="dist" depends="build,rev_number" description="Create distribution">
 		<mkdir dir="${jar.dir}" />
 
 		<!-- Include everything in the .jar file -->
@@ -60,26 +65,32 @@
 	</target>
 
 
-	<target name="rev.number">
+	<target name="rev_number" description="Update revision numbers">
 		<!-- Increase the revision number in version.properties -->
 		<propertyfile file="version.properties" comment="Version properties">
 			<entry key="build.revision.number" type="int" default="0" operation="+" />
 			<entry key="build.minor.number" type="int" default="0" />
 			<entry key="build.major.number" type="int" default="0" />
 		</propertyfile>
-		
-		<!-- Load the version numbers as properties -->
+
+		<!-- Load the updated version numbers as properties -->
 		<loadproperties srcfile="version.properties" />
-		
+
 		<!-- Unify the updated version numbers into build.number -->
 		<propertyfile file="version.properties" comment="Version properties">
 			<entry key="build.number" value="${build.major.number}.${build.minor.number}.${build.revision.number}" />
 		</propertyfile>
 	</target>
 
-	<target name="jrun" depends="dist">
+	<target name="jrun" depends="dist" description="Run the application from distribution">
 		<java jar="${jar.dir}/${jar.name}.jar" fork="yes" />
 	</target>
-
+	
+	<target name="git_commit">
+		<exec executable="git">
+			<arg value="add"/>
+			<arg value="-A"/>
+		  </exec>
+	</target>
 
 </project>
