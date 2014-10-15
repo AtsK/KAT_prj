@@ -45,7 +45,7 @@
 	</target>
 
 	<target name="runc" depends="build" description="Run the application (console)">
-		<java classname="ee.ut.math.tvt.[team].Intro" classpathref="test.classpath" fork="yes">
+		<java classname="ee.ut.math.tvt.KAT.Intro" classpathref="test.classpath" fork="yes">
 			<arg value="console" />
 		</java>
 	</target>
