@@ -85,12 +85,15 @@
 	<target name="jrun" depends="dist" description="Run the application from distribution">
 		<java jar="${jar.dir}/${jar.name}.jar" fork="yes" />
 	</target>
-	
+
 	<target name="git_commit">
 		<exec executable="git">
-			<arg value="add"/>
-			<arg value="-A"/>
-		  </exec>
+			<arg value="add" />
+			<arg value="-A" />
+		</exec>
+		<exec executable="git">
+			<arg value="commit -m message" />
+		</exec>
 	</target>
 
 </project>
