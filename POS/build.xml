@@ -90,9 +90,9 @@
 		<exec executable="git">
 			<arg line="add -A" />
 		</exec>
-		<input message="Enter commit message:" addproperty="mess" defaultvalue="no message" />
+		<input message="Enter commit message:" addproperty="commit.message" defaultvalue="no message" />
 		<exec executable="git">
-			<arg line="commit -m ${mess}" />
+			<arg line="commit -m ${commit.message}" />
 		</exec>
 	</target>
 
