@@ -92,10 +92,14 @@
 		</exec>
 		<input message="Enter commit message:" addproperty="commit.message" defaultvalue="no message" />
 		<exec executable="git">
-			<arg line="commit -m &quot;${commit.message}&quot;}" />
+			<arg line="commit -m &quot;${commit.message}&quot;" />
 		</exec>
+		<input message="Enter your GitHub username:" addproperty="github.username" />
+		<input message="Enter your GitHub password:" addproperty="github.password">
+			<handler classname="org.apache.tools.ant.input.SecureInputHandler" />
+		</input>
 		<exec executable="git">
-			<arg line="push" />
+			<arg line="push https://${github.username}:${github.password}@github.com/AtsK/KAT_prj.git" />
 		</exec>
 	</target>
 
@@ -105,8 +109,15 @@
 		<exec executable="git">
 			<arg line="tag -a ${tag.name} -m  ${tag.comment}" />
 		</exec>
+		<input message="Enter your GitHub username:" addproperty="github.username" />
+		<input message="Enter your GitHub password:" addproperty="github.password">
+			<handler classname="org.apache.tools.ant.input.SecureInputHandler" />
+		</input>
 		<exec executable="git">
-			<arg line="push --tags" />
+			<arg line="push https://${github.username}:${github.password}@github.com/AtsK/KAT_prj.git" />
+		</exec>
+		<exec executable="git">
+			<arg line="push --tags https://${github.username}:${github.password}@github.com/AtsK/KAT_prj.git" />
 		</exec>
 	</target>
 
