@@ -7,22 +7,22 @@ import java.util.Properties;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+import org.apache.log4j.Logger;
+
 import com.jgoodies.looks.windows.WindowsLookAndFeel;
 
 public class IntroUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	private static final Logger logger = LogManager.getLogger(IntroUI.class
-			.getName());
+	private static final Logger log = Logger.getLogger(Intro.class);
 
 	public IntroUI() {
 		setTitle("Introduction");
-
 		// size & location
 		int width = 600;
 		int height = 600;
@@ -34,7 +34,7 @@ public class IntroUI extends JFrame {
 			UIManager.setLookAndFeel(new WindowsLookAndFeel());
 
 		} catch (UnsupportedLookAndFeelException e1) {
-			logger.warn(e1.getMessage());
+			log.warn(e1.getMessage());
 		}
 
 		drawWidgets();
