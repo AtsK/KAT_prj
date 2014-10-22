@@ -3,6 +3,7 @@ package ee.ut.math.tvt.salessystem.ui.panels;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
+
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -11,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.NoSuchElementException;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -19,11 +21,15 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.JComboBox;
+
+import org.apache.log4j.Logger;
 
 /**
  * Purchase pane + shopping cart tabel UI.
  */
 public class PurchaseItemPanel extends JPanel {
+	private static final Logger log = Logger.getLogger(PurchaseItemPanel.class);
 
     private static final long serialVersionUID = 1L;
 
@@ -32,6 +38,8 @@ public class PurchaseItemPanel extends JPanel {
     private JTextField quantityField;
     private JTextField nameField;
     private JTextField priceField;
+    private JComboBox dropdown;
+    
 
     private JButton addItemButton;
 
@@ -78,14 +86,18 @@ public class PurchaseItemPanel extends JPanel {
 
         // Create the panel
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(5, 2));
+        panel.setLayout(new GridLayout(6, 2));
         panel.setBorder(BorderFactory.createTitledBorder("Product"));
 
         // Initialize the textfields
+        String[] asjad = {"chips", "koola"};
+        dropdown = new JComboBox(asjad);
         barCodeField = new JTextField();
         quantityField = new JTextField("1");
         nameField = new JTextField();
         priceField = new JTextField();
+        
+        
 
         // Fill the dialog fields if the bar code text field loses focus
         barCodeField.addFocusListener(new FocusListener() {
@@ -96,13 +108,17 @@ public class PurchaseItemPanel extends JPanel {
                 fillDialogFields();
             }
         });
-
+        barCodeField.setEditable(false);
         nameField.setEditable(false);
         priceField.setEditable(false);
 
         // == Add components to the panel
 
         // - bar code
+        panel.add(new JLabel("items:"));
+        panel.add(dropdown);
+        
+       
         panel.add(new JLabel("Bar code:"));
         panel.add(barCodeField);
 
@@ -111,7 +127,7 @@ public class PurchaseItemPanel extends JPanel {
         panel.add(quantityField);
 
         // - name
-        panel.add(new JLabel("Name:"));
+        panel.add(new JLabel("Nimi:"));
         panel.add(nameField);
 
         // - price
@@ -133,16 +149,19 @@ public class PurchaseItemPanel extends JPanel {
 
     // Fill dialog with data from the "database".
     public void fillDialogFields() {
-        StockItem stockItem = getStockItemByBarcode();
+        StockItem stockItem = getStockItemByName();
 
         if (stockItem != null) {
             nameField.setText(stockItem.getName());
             String priceString = String.valueOf(stockItem.getPrice());
             priceField.setText(priceString);
+       //     BarCodeField.setText(StockItem.getBarCode());
         } else {
             reset();
         }
     }
+    
+   
 
     // Search the warehouse for a StockItem with the bar code entered
     // to the barCode textfield.
@@ -150,6 +169,18 @@ public class PurchaseItemPanel extends JPanel {
         try {
             int code = Integer.parseInt(barCodeField.getText());
             return model.getWarehouseTableModel().getItemById(code);
+        } catch (NumberFormatException ex) {
+            return null;
+        } catch (NoSuchElementException ex) {
+            return null;
+        }
+    }
+    
+    private StockItem getStockItemByName() {
+        try {
+            String name = (String) dropdown.getSelectedItem();
+            log.warn(name);
+            return model.getWarehouseTableModel().getItemById(Integer.parseInt(name));
         } catch (NumberFormatException ex) {
             return null;
         } catch (NoSuchElementException ex) {
