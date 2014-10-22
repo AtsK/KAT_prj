@@ -1,29 +1,27 @@
 package ee.ut.math.tvt.salessystem.ui.panels;
 
-import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
-import ee.ut.math.tvt.salessystem.domain.data.StockItem;
-import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
-
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.util.NoSuchElementException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.JComboBox;
 
 import org.apache.log4j.Logger;
+
+import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
+import ee.ut.math.tvt.salessystem.domain.data.StockItem;
+import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 
 /**
  * Purchase pane + shopping cart tabel UI.
@@ -38,7 +36,7 @@ public class PurchaseItemPanel extends JPanel {
     private JTextField quantityField;
     private JTextField nameField;
     private JTextField priceField;
-    private JComboBox dropdown;
+    private JComboBox<String> dropdown;
     
 
     private JButton addItemButton;
@@ -90,8 +88,8 @@ public class PurchaseItemPanel extends JPanel {
         panel.setBorder(BorderFactory.createTitledBorder("Product"));
 
         // Initialize the textfields
-        String[] asjad = {"chips", "koola"};
-        dropdown = new JComboBox(asjad);
+        String[] asjad = {"Lays chips", "koola"};
+        dropdown = new JComboBox<String>(asjad);
         barCodeField = new JTextField();
         quantityField = new JTextField("1");
         nameField = new JTextField();
@@ -100,13 +98,11 @@ public class PurchaseItemPanel extends JPanel {
         
 
         // Fill the dialog fields if the bar code text field loses focus
-        barCodeField.addFocusListener(new FocusListener() {
-            public void focusGained(FocusEvent e) {
-            }
-
-            public void focusLost(FocusEvent e) {
-                fillDialogFields();
-            }
+        dropdown.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				log.info(dropdown.getSelectedItem().toString());
+				fillDialogFields();
+			}
         });
         barCodeField.setEditable(false);
         nameField.setEditable(false);
@@ -115,7 +111,7 @@ public class PurchaseItemPanel extends JPanel {
         // == Add components to the panel
 
         // - bar code
-        panel.add(new JLabel("items:"));
+        panel.add(new JLabel("Item:"));
         panel.add(dropdown);
         
        
@@ -127,7 +123,7 @@ public class PurchaseItemPanel extends JPanel {
         panel.add(quantityField);
 
         // - name
-        panel.add(new JLabel("Nimi:"));
+        panel.add(new JLabel("Name:"));
         panel.add(nameField);
 
         // - price
@@ -155,8 +151,9 @@ public class PurchaseItemPanel extends JPanel {
             nameField.setText(stockItem.getName());
             String priceString = String.valueOf(stockItem.getPrice());
             priceField.setText(priceString);
-       //     BarCodeField.setText(StockItem.getBarCode());
+            barCodeField.setText(stockItem.getId().toString());
         } else {
+        	log.error("Couldn't find the item.");
             reset();
         }
     }
@@ -178,9 +175,8 @@ public class PurchaseItemPanel extends JPanel {
     
     private StockItem getStockItemByName() {
         try {
-            String name = (String) dropdown.getSelectedItem();
-            log.warn(name);
-            return model.getWarehouseTableModel().getItemById(Integer.parseInt(name));
+            String name = dropdown.getSelectedItem().toString();
+            return model.getWarehouseTableModel().getItemByName(name);
         } catch (NumberFormatException ex) {
             return null;
         } catch (NoSuchElementException ex) {
@@ -211,6 +207,7 @@ public class PurchaseItemPanel extends JPanel {
      */
     @Override
     public void setEnabled(boolean enabled) {
+    	this.dropdown.setEnabled(enabled);
         this.addItemButton.setEnabled(enabled);
         this.barCodeField.setEnabled(enabled);
         this.quantityField.setEnabled(enabled);

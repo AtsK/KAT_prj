@@ -58,6 +58,15 @@ public abstract class SalesSystemTableModel<T extends DisplayableItem> extends
         }
         throw new NoSuchElementException();
     }
+    
+ // search for item with the specified name
+    public T getItemByName(String name) {
+        for (final T item : rows) {
+            if (item.getName() == name)
+                return item;
+        }
+        throw new NoSuchElementException();
+    }
 
     public List<T> getTableRows() {
         return rows;

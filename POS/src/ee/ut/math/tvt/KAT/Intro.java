@@ -34,7 +34,7 @@ private static final String MODE = "console";
 			try {
 				Thread.sleep(3000);
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				log.warn(e.getMessage());
 			}
 			introUI.setVisible(false);
 		}
