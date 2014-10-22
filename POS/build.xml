@@ -103,7 +103,7 @@
 		</exec>
 	</target>
 
-	<target name="git_tag">
+	<target name="git_tag" description="Add a tag to current state">
 		<input message="Enter tag name:" addproperty="tag.name" defaultvalue="no name" />
 		<input message="Enter tag comment:" addproperty="tag.comment" defaultvalue="no comment" />
 		<exec executable="git">
