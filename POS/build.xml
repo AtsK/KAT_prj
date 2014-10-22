@@ -43,7 +43,7 @@
 	<target name="run" depends="build" description="Run the application">
 		<java classname="${main-class}" classpathref="run.classpath" fork="yes">
 			<jvmarg value="-Xdebug" />
-			<jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044" />
+			<jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=1044" />
 		</java>
 	</target>
 
