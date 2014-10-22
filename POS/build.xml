@@ -10,7 +10,6 @@
 	<property name="lib.dir" location="lib/" />
 	<property name="conf.dir" location="etc/" />
 
-
 	<property name="main-class" value="ee.ut.math.tvt.KAT.Intro" />
 	<property name="jar.name" value="KAT" />
 	<property name="version" location="version.properties" />
@@ -41,6 +40,10 @@
 	</target>
 
 	<target name="run" depends="build" description="Run the application">
+		<java classname="${main-class}" classpathref="run.classpath" fork="yes" />
+	</target>
+
+	<target name="debug" depends="build" description="Run the application and wait for remote debugger to connect.">
 		<java classname="${main-class}" classpathref="run.classpath" fork="yes">
 			<jvmarg value="-Xdebug" />
 			<jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=1044" />
