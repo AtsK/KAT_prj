@@ -29,9 +29,10 @@ local.properties
 # TeXlipse plugin
 .texlipse
 
+#NB: Should be able to import project to eclipse! Ignore the next lines.
 #Also ignore .classpath and .project, as we're using ant
-.classpath
-.project
+#.classpath
+#.project
 
 #Ignore ant build specific files
 build/

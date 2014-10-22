@@ -23,7 +23,7 @@
 	</path>
 
 	<!-- Path reference for external libraries & config files & compiled classes-->
-	<path id="test.classpath">
+	<path id="run.classpath">
 		<path refid="compile.classpath" />
 		<pathelement location="${classes.dir}" />
 		<pathelement location="${conf.dir}" />
@@ -41,11 +41,14 @@
 	</target>
 
 	<target name="run" depends="build" description="Run the application">
-		<java classname="${main-class}" classpathref="test.classpath" fork="yes" />
+		<java classname="${main-class}" classpathref="run.classpath" fork="yes">
+			<jvmarg value="-Xdebug" />
+			<jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044" />
+		</java>
 	</target>
 
 	<target name="runc" depends="build" description="Run the application (console)">
-		<java classname="ee.ut.math.tvt.KAT.Intro" classpathref="test.classpath" fork="yes">
+		<java classname="${main-class}" classpathref="run.classpath" fork="yes">
 			<arg value="console" />
 		</java>
 	</target>
