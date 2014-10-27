@@ -135,13 +135,27 @@ public class PurchaseItemPanel extends JPanel {
         addItemButton = new JButton("Add to cart");
         addItemButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                addItemEventHandler();
+            	if (StockItemCheck(getStockItemByBarcode())==true){
+            		addItemEventHandler();
+            	}
+            	else{
+            		log.error("Otsas.");
+            	}
             }
         });
 
         panel.add(addItemButton);
 
         return panel;
+    }
+    
+    public boolean StockItemCheck(StockItem stockitem){
+    	if (stockitem.getQuantity()==0){
+    		return false;
+    	}
+    	else{
+    		return true;
+    	}
     }
 
     // Fill dialog with data from the "database".

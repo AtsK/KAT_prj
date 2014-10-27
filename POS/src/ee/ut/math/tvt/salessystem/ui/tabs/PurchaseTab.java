@@ -2,18 +2,30 @@ package ee.ut.math.tvt.salessystem.ui.tabs;
 
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
+import ee.ut.math.tvt.salessystem.paymentwindow.confirmationWindowUI;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 import ee.ut.math.tvt.salessystem.ui.panels.PurchaseItemPanel;
+
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
 import org.apache.log4j.Logger;
+
+import com.jgoodies.looks.windows.WindowsLookAndFeel;
 
 /**
  * Encapsulates everything that has to do with the purchase tab (the tab
@@ -152,6 +164,7 @@ public class PurchaseTab {
 	/** Event handler for the <code>submit purchase</code> event. */
 	protected void submitPurchaseButtonClicked() {
 		log.info("Sale complete");
+		new confirmationWindowUI().setVisible(true);
 		try {
 			log.debug("Contents of the current basket:\n"
 					+ model.getCurrentPurchaseTableModel());
@@ -163,6 +176,10 @@ public class PurchaseTab {
 			log.error(e1.getMessage());
 		}
 	}
+	
+	//method that makes new window if the order is confirmed
+	
+	
 
 	/*
 	 * === Helper methods that bring the whole purchase-tab to a certain state
