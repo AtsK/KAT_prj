@@ -88,7 +88,8 @@ public class PurchaseItemPanel extends JPanel {
         panel.setBorder(BorderFactory.createTitledBorder("Product"));
 
         // Initialize the textfields
-        String[] asjad = {"Lays chips", "koola"};
+        String[] asjad = {"", "Lays chips", "Chupa-chups", "Frankfurters", "Free Beer"};
+        
         dropdown = new JComboBox<String>(asjad);
         barCodeField = new JTextField();
         quantityField = new JTextField("1");
