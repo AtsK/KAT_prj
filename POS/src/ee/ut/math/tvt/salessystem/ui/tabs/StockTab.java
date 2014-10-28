@@ -90,6 +90,11 @@ public class StockTab {
 		stockItemAdditionWindow.setVisible(true);
 	}
 
+    addItem = new JButton("Add");
+    gc.gridwidth = GridBagConstraints.RELATIVE;
+    gc.weightx = 1.0;
+    panel.add(addItem, gc);
+
 	// table of the wareshouse stock
 	private Component drawStockMainPane() {
 		JPanel panel = new JPanel();

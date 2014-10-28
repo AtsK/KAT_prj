@@ -20,11 +20,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.event.PopupMenuEvent;
-
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import org.apache.log4j.Logger;
 
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
+import ee.ut.math.tvt.salessystem.ui.Utilities;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 
 /**
@@ -100,7 +102,6 @@ public class PurchaseItemPanel extends JPanel {
 		// Fill the dialog fields if the bar code text field loses focus
 		dropdown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				log.info(dropdown.getSelectedItem().toString());
 				fillDialogFields();
 			}
 		});
@@ -127,6 +128,26 @@ public class PurchaseItemPanel extends JPanel {
 		// - amount
 		panel.add(new JLabel("Amount:"));
 		panel.add(quantityField);
+		
+		quantityField.getDocument().addDocumentListener(new DocumentListener() {
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				removeUpdate(e);
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				if (Utilities.isNumeric(quantityField.getText())) {
+					addItemButton.setEnabled(true);
+				} else {
+					addItemButton.setEnabled(false);
+				}
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+			}
+		});
 
 		// - name
 		panel.add(new JLabel("Name:"));
@@ -144,7 +165,6 @@ public class PurchaseItemPanel extends JPanel {
 			}
 
 		});
-
 		panel.add(addItemButton);
 
 		return panel;

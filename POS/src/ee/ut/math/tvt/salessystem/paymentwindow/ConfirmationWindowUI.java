@@ -5,8 +5,6 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -22,11 +20,11 @@ import org.apache.log4j.Logger;
 import com.jgoodies.looks.windows.WindowsLookAndFeel;
 
 import ee.ut.math.tvt.salessystem.ui.Utilities;
-import ee.ut.math.tvt.salessystem.ui.panels.PurchaseItemPanel;
 
 public class ConfirmationWindowUI extends JFrame {
 
-	private static final Logger log = Logger.getLogger(ConfirmationWindowUI.class);
+	private static final Logger log = Logger
+			.getLogger(ConfirmationWindowUI.class);
 	private double sum;
 
 	private JTextField sumField;
@@ -76,8 +74,11 @@ public class ConfirmationWindowUI extends JFrame {
 			public void removeUpdate(DocumentEvent e) {
 				if (Utilities.isFloat(paymentField.getText())) {
 					confirmationButton.setEnabled(true);
-					changeAmountField.setText(String.valueOf(Double
-							.parseDouble(paymentField.getText()) - sum));
+					changeAmountField.setText(String.valueOf(Utilities.round(Double
+							.parseDouble(paymentField.getText()) - sum, 3)));
+					if (Double.parseDouble(changeAmountField.getText()) < 0) {
+						confirmationButton.setEnabled(false);
+					}
 				} else {
 					confirmationButton.setEnabled(false);
 				}
