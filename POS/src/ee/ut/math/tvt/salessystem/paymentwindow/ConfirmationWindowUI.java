@@ -5,6 +5,9 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,7 +22,9 @@ import org.apache.log4j.Logger;
 
 import com.jgoodies.looks.windows.WindowsLookAndFeel;
 
+import ee.ut.math.tvt.salessystem.domain.data.Order;
 import ee.ut.math.tvt.salessystem.ui.Utilities;
+import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 
 public class ConfirmationWindowUI extends JFrame {
 
@@ -33,10 +38,13 @@ public class ConfirmationWindowUI extends JFrame {
 	private JButton confirmationButton;
 	private JButton cancelButton;
 
+	private SalesSystemModel model;
+	
 	private static final long serialVersionUID = 1L;
 
-	public ConfirmationWindowUI(double sum) {
-		this.sum = sum;
+	public ConfirmationWindowUI(SalesSystemModel model) {
+		this.model = model;
+		this.sum = model.getCurrentPurchaseTableModel().getTotalSum();
 
 		setTitle("Payment");
 		int height = 200;
@@ -74,8 +82,8 @@ public class ConfirmationWindowUI extends JFrame {
 			public void removeUpdate(DocumentEvent e) {
 				if (Utilities.isFloat(paymentField.getText())) {
 					confirmationButton.setEnabled(true);
-					changeAmountField.setText(String.valueOf(Utilities.round(Double
-							.parseDouble(paymentField.getText()) - sum, 3)));
+					changeAmountField.setText(String.valueOf(Utilities.round(
+							Double.parseDouble(paymentField.getText()) - sum, 3)));
 					if (Double.parseDouble(changeAmountField.getText()) < 0) {
 						confirmationButton.setEnabled(false);
 					}
@@ -110,7 +118,8 @@ public class ConfirmationWindowUI extends JFrame {
 		confirmationButton = new JButton("Confirm");
 		confirmationButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// siia meetod, mis lisab tellimuse history tabi
+				model.getHistoryTableModel().addOrder(createOrder());
+				dispose();
 			}
 		});
 		cancelButton = new JButton("Cancel");
@@ -122,6 +131,12 @@ public class ConfirmationWindowUI extends JFrame {
 
 		add(confirmationButton);
 		add(cancelButton);
-
 	}
+	
+	private Order createOrder() {
+		
+		Order order = new Order(new Date(), 1000.0);
+		return order;
+	}
+	
 }

@@ -4,11 +4,13 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.JTableHeader;
+
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 
 public class HistoryTab { 
@@ -34,16 +36,16 @@ public class HistoryTab {
         gc.weightx = 1.0d;
         gc.weighty = 0d;
 
-        panel.add(drawStockMenuPane(), gc);
+        panel.add(drawHistoryMenuPane(), gc);
 
         gc.weighty = 1.0;
         gc.fill = GridBagConstraints.BOTH;
-        panel.add(drawStockMainPane(), gc);
+        panel.add(drawHistoryMainPane(), gc);
         return panel;
       }
 
       
-      private Component drawStockMenuPane() {
+      private Component drawHistoryMenuPane() {
         JPanel panel = new JPanel();
 
         GridBagConstraints gc = new GridBagConstraints();
@@ -61,10 +63,10 @@ public class HistoryTab {
       }
 
 
-      private Component drawStockMainPane() {
+      private Component drawHistoryMainPane() {
         JPanel panel = new JPanel();
 
-        JTable table = new JTable(model.getOrderListModel());
+        JTable table = new JTable(model.getHistoryTableModel());
 
         JTableHeader header = table.getTableHeader();
         header.setReorderingAllowed(false);

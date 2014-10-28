@@ -30,7 +30,7 @@ import ee.ut.math.tvt.salessystem.ui.Utilities;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 
 /**
- * Purchase pane + shopping cart tabel UI.
+ * Purchase pane + shopping cart table UI.
  */
 public class PurchaseItemPanel extends JPanel {
 	private static final Logger log = Logger.getLogger(PurchaseItemPanel.class);
@@ -92,14 +92,15 @@ public class PurchaseItemPanel extends JPanel {
 		panel.setLayout(new GridLayout(6, 2));
 		panel.setBorder(BorderFactory.createTitledBorder("Product"));
 
-        // Initialize the textfields
-        List<StockItem> stockItems = model.getWarehouseTableModel().getTableRows();
-        Vector<String> selectionFields = new Vector<>();
-        selectionFields.add("");
-        for (StockItem item : stockItems) {
-        	selectionFields.add(item.getName());
-        }
-        dropdown = new JComboBox<String>(selectionFields);
+		// Initialize the textfields
+		List<StockItem> stockItems = model.getWarehouseTableModel()
+				.getTableRows();
+		Vector<String> selectionFields = new Vector<>();
+		selectionFields.add("");
+		for (StockItem item : stockItems) {
+			selectionFields.add(item.getName());
+		}
+		dropdown = new JComboBox<String>(selectionFields);
 		barCodeField = new JTextField();
 		quantityField = new JTextField("1");
 		nameField = new JTextField();
@@ -127,7 +128,7 @@ public class PurchaseItemPanel extends JPanel {
 		// - amount
 		panel.add(new JLabel("Amount:"));
 		panel.add(quantityField);
-		
+
 		quantityField.getDocument().addDocumentListener(new DocumentListener() {
 			@Override
 			public void insertUpdate(DocumentEvent e) {

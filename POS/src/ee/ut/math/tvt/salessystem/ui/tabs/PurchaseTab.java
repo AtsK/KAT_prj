@@ -169,8 +169,9 @@ public class PurchaseTab {
 
 	/** Event handler for the <code>submit purchase</code> event. */
 	protected void submitPurchaseButtonClicked() {
-		log.info("Sale complete");
-		new ConfirmationWindowUI(model.getCurrentPurchaseTableModel().getTotalSum()).setVisible(true);
+		ConfirmationWindowUI confirmationWindowUI = new ConfirmationWindowUI(
+				model);
+		confirmationWindowUI.setVisible(true);
 		try {
 			log.debug("Contents of the current basket:\n"
 					+ model.getCurrentPurchaseTableModel());
