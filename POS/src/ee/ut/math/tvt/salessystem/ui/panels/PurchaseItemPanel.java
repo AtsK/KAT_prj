@@ -19,9 +19,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-
 import org.apache.log4j.Logger;
 
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
@@ -92,15 +92,9 @@ public class PurchaseItemPanel extends JPanel {
 		panel.setLayout(new GridLayout(6, 2));
 		panel.setBorder(BorderFactory.createTitledBorder("Product"));
 
-		// Initialize the textfields
-		List<StockItem> stockItems = model.getWarehouseTableModel()
-				.getTableRows();
-		Vector<String> selectionFields = new Vector<>();
-		selectionFields.add("");
-		for (StockItem item : stockItems) {
-			selectionFields.add(item.getName());
-		}
-		dropdown = new JComboBox<String>(selectionFields);
+        // Initialize the textfields
+		updateStockItems();
+
 		barCodeField = new JTextField();
 		quantityField = new JTextField("1");
 		nameField = new JTextField();
@@ -110,6 +104,13 @@ public class PurchaseItemPanel extends JPanel {
 		dropdown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				fillDialogFields();
+			}
+		});
+		dropdown.addPopupMenuListener(new javax.swing.event.PopupMenuListener(){
+			public void popupMenuCanceled(PopupMenuEvent e) {}
+			public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {}
+			public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
+				//updateStockItems();
 			}
 		});
 		barCodeField.setEditable(false);
@@ -168,6 +169,17 @@ public class PurchaseItemPanel extends JPanel {
 		panel.add(addItemButton);
 
 		return panel;
+	}
+	
+	//Update stockitems list JComboBox list
+	private void updateStockItems() {
+        List<StockItem> stockItems = model.getWarehouseTableModel().getTableRows();
+        Vector<String> selectionFields = new Vector<>();
+        selectionFields.add("");
+        for (StockItem item : stockItems) {
+        	selectionFields.add(item.getName());
+        }
+        dropdown = new JComboBox<String>(selectionFields);
 	}
 
 	// Fill dialog with data from the "database".
