@@ -14,13 +14,19 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
+import org.apache.log4j.Logger;
 
 import com.jgoodies.looks.windows.WindowsLookAndFeel;
 
-import ee.ut.math.tvt.salessystem.ui.model.HistoryTableModel;
+import ee.ut.math.tvt.salessystem.ui.Utilities;
+import ee.ut.math.tvt.salessystem.ui.panels.PurchaseItemPanel;
 
 public class ConfirmationWindowUI extends JFrame {
 
+	private static final Logger log = Logger.getLogger(ConfirmationWindowUI.class);
 	private double sum;
 
 	private JTextField sumField;
@@ -56,18 +62,29 @@ public class ConfirmationWindowUI extends JFrame {
 
 		sumField = new JTextField(String.valueOf(sum));
 		paymentField = new JTextField();
-		paymentField.setText("0.0");
+		paymentField.setText(String.valueOf(sum));
 		changeAmountField = new JTextField();
-		changeAmountField.setText(String.valueOf(-sum));
+		changeAmountField.setText("0.0");
 
-		paymentField.addFocusListener(new FocusListener() {
+		paymentField.getDocument().addDocumentListener(new DocumentListener() {
 			@Override
-			public void focusGained(FocusEvent e) {
+			public void insertUpdate(DocumentEvent e) {
+				removeUpdate(e);
 			}
 
 			@Override
-			public void focusLost(FocusEvent e) {
-				changeAmountField.setText(String.valueOf(Double.parseDouble(paymentField.getText())-sum));
+			public void removeUpdate(DocumentEvent e) {
+				if (Utilities.isFloat(paymentField.getText())) {
+					confirmationButton.setEnabled(true);
+					changeAmountField.setText(String.valueOf(Double
+							.parseDouble(paymentField.getText()) - sum));
+				} else {
+					confirmationButton.setEnabled(false);
+				}
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
 			}
 		});
 
@@ -92,7 +109,7 @@ public class ConfirmationWindowUI extends JFrame {
 		confirmationButton = new JButton("Confirm");
 		confirmationButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//meetod mis lisab orderi historysse
+				// siia meetod, mis lisab tellimuse history tabi
 			}
 		});
 		cancelButton = new JButton("Cancel");
@@ -104,9 +121,6 @@ public class ConfirmationWindowUI extends JFrame {
 
 		add(confirmationButton);
 		add(cancelButton);
-		
-		
-	
 
 	}
 }
