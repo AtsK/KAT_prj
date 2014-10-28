@@ -1,9 +1,12 @@
 package ee.ut.math.tvt.salessystem.ui.tabs;
 
+import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
+import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.paymentwindow.confirmationWindowUI;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
+import ee.ut.math.tvt.salessystem.ui.model.StockTableModel;
 import ee.ut.math.tvt.salessystem.ui.panels.PurchaseItemPanel;
 
 import java.awt.Color;
@@ -16,6 +19,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -155,6 +160,20 @@ public class PurchaseTab {
 		try {
 			domainController.cancelCurrentPurchase();
 			endSale();
+			for (SoldItem it : model.getCurrentPurchaseTableModel()
+					.getTableRows()) {
+				StockItem curItem = it.getStockItem();
+				model.getWarehouseTableModel()
+						.getItemByName(curItem.getName())
+						.setQuantity(
+								model.getWarehouseTableModel()
+										.getItemByName(curItem.getName())
+										.getQuantity()
+										+ model.getCurrentPurchaseTableModel()
+												.getItemByName(
+														curItem.getName())
+												.getQuantity());
+			}
 			model.getCurrentPurchaseTableModel().clear();
 		} catch (VerificationFailedException e1) {
 			log.error(e1.getMessage());
@@ -176,10 +195,8 @@ public class PurchaseTab {
 			log.error(e1.getMessage());
 		}
 	}
-	
-	//method that makes new window if the order is confirmed
-	
-	
+
+	// method that makes new window if the order is confirmed
 
 	/*
 	 * === Helper methods that bring the whole purchase-tab to a certain state
