@@ -58,11 +58,6 @@ public class StockTab {
     gc.anchor = GridBagConstraints.NORTHWEST;
     gc.weightx = 0;
 
-    addItem = new JButton("Add");
-    gc.gridwidth = GridBagConstraints.RELATIVE;
-    gc.weightx = 1.0;
-    panel.add(addItem, gc);
-
     panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
     return panel;
   }
