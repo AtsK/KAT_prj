@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -132,25 +133,14 @@ public class PurchaseItemPanel extends JPanel {
 		addItemButton = new JButton("Add to cart");
 		addItemButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (StockItemCheck(getStockItemByBarcode()) == true) {
-					addItemEventHandler();
-				} else {
-					log.error("Out of stock.");
-				}
+				addItemEventHandler();
 			}
+
 		});
 
 		panel.add(addItemButton);
 
 		return panel;
-	}
-
-	public boolean StockItemCheck(StockItem stockitem) {
-		if (stockitem.getQuantity() <= 0) {
-			return false;
-		} else {
-			return true;
-		}
 	}
 
 	// Fill dialog with data from the "database".
@@ -207,15 +197,18 @@ public class PurchaseItemPanel extends JPanel {
 			}
 			int availableAmount = model.getWarehouseTableModel()
 					.getItemById(stockItem.getId()).getQuantity();
-			log.error("Avaialable items: " + availableAmount);
 			if (availableAmount >= quantity) {
 				model.getCurrentPurchaseTableModel().addItem(
 						new SoldItem(stockItem, quantity));
-				//Add 
-				model.getWarehouseTableModel()
-				.getItemById(stockItem.getId()).setQuantity(availableAmount - quantity);
+				model.getWarehouseTableModel().getItemById(stockItem.getId())
+						.setQuantity(availableAmount - quantity);
 			} else {
-				log.error("Item: "
+				JOptionPane availabilityMsg = new JOptionPane();
+				availabilityMsg.showMessageDialog(null,
+						"Requested item amount exceeds availability!",
+						"Availability exceeded", JOptionPane.ERROR_MESSAGE);
+				;
+				log.info("Item: "
 						+ stockItem.getName()
 						+ " stock amount is lower than requested purchase amount");
 			}
