@@ -17,6 +17,8 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import com.jgoodies.looks.windows.WindowsLookAndFeel;
 
+import ee.ut.math.tvt.salessystem.ui.model.HistoryTableModel;
+
 public class ConfirmationWindowUI extends JFrame {
 
 	private double sum;
@@ -90,7 +92,7 @@ public class ConfirmationWindowUI extends JFrame {
 		confirmationButton = new JButton("Confirm");
 		confirmationButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// siia meetod, mis lisab tellimuse history tabi
+				//meetod mis lisab orderi historysse
 			}
 		});
 		cancelButton = new JButton("Cancel");
@@ -102,6 +104,9 @@ public class ConfirmationWindowUI extends JFrame {
 
 		add(confirmationButton);
 		add(cancelButton);
+		
+		
+	
 
 	}
 }
