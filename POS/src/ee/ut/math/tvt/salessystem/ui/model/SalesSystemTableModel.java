@@ -67,6 +67,7 @@ public abstract class SalesSystemTableModel<T extends DisplayableItem> extends
         }
         throw new NoSuchElementException();
     }
+   
 
     public List<T> getTableRows() {
         return rows;

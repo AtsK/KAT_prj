@@ -5,7 +5,9 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -87,11 +89,14 @@ public class PurchaseItemPanel extends JPanel {
 		panel.setLayout(new GridLayout(6, 2));
 		panel.setBorder(BorderFactory.createTitledBorder("Product"));
 
-		// Initialize the textfields
-		String[] asjad = { "", "Lays chips", "Chupa-chups", "Frankfurters",
-				"Free Beer" };
-
-		dropdown = new JComboBox<String>(asjad);
+        // Initialize the textfields
+        List<StockItem> stockItems = model.getWarehouseTableModel().getTableRows();
+        Vector<String> selectionFields = new Vector<>();
+        selectionFields.add("");
+        for (StockItem item : stockItems) {
+        	selectionFields.add(item.getName());
+        }
+        dropdown = new JComboBox<String>(selectionFields);
 		barCodeField = new JTextField();
 		quantityField = new JTextField("1");
 		nameField = new JTextField();
@@ -203,8 +208,7 @@ public class PurchaseItemPanel extends JPanel {
 				model.getWarehouseTableModel().getItemById(stockItem.getId())
 						.setQuantity(availableAmount - quantity);
 			} else {
-				JOptionPane availabilityMsg = new JOptionPane();
-				availabilityMsg.showMessageDialog(null,
+				JOptionPane.showMessageDialog(null,
 						"Requested item amount exceeds availability!",
 						"Availability exceeded", JOptionPane.ERROR_MESSAGE);
 				;
