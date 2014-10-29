@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.DocumentEvent;
@@ -25,6 +26,7 @@ import com.jgoodies.looks.windows.WindowsLookAndFeel;
 import ee.ut.math.tvt.salessystem.domain.data.Order;
 import ee.ut.math.tvt.salessystem.ui.Utilities;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
+import ee.ut.math.tvt.salessystem.ui.tabs.PurchaseTab;
 
 public class ConfirmationWindowUI extends JFrame {
 
@@ -37,15 +39,18 @@ public class ConfirmationWindowUI extends JFrame {
 	private JTextField changeAmountField;
 	private JButton confirmationButton;
 	private JButton cancelButton;
+	private JFrame mainFrame;
 
 	private SalesSystemModel model;
 	
 	private static final long serialVersionUID = 1L;
 
-	public ConfirmationWindowUI(SalesSystemModel model) {
+	public ConfirmationWindowUI(SalesSystemModel model, JFrame mainFrame) {
 		this.model = model;
 		this.sum = model.getCurrentPurchaseTableModel().getTotalSum();
-
+		this.mainFrame = mainFrame;
+		
+		mainFrame.setEnabled(false);
 		setTitle("Payment");
 		int height = 200;
 		int width = 300;
@@ -114,17 +119,21 @@ public class ConfirmationWindowUI extends JFrame {
 
 		add(change);
 		add(changeAmountField);
+		
+		
 
 		confirmationButton = new JButton("Confirm");
 		confirmationButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				model.getHistoryTableModel().addOrder(createOrder());
+				mainFrame.setEnabled(true);
 				dispose();
 			}
 		});
 		cancelButton = new JButton("Cancel");
 		cancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				mainFrame.setEnabled(true);
 				dispose();
 			}
 		});
