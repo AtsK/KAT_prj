@@ -43,8 +43,6 @@ public class PurchaseTab {
 	private PurchaseItemPanel purchasePane;
 
 	private SalesSystemModel model;
-	
-
 
 	public PurchaseTab(SalesDomainController controller, SalesSystemModel model) {
 		this.domainController = controller;
@@ -156,16 +154,14 @@ public class PurchaseTab {
 			endSale();
 			for (SoldItem it : model.getCurrentPurchaseTableModel()
 					.getTableRows()) {
-				StockItem curItem = it.getStockItem();
+				long curItem = it.getStockItem().getId();
 				model.getWarehouseTableModel()
-						.getItemByName(curItem.getName())
+						.getItemById(curItem)
 						.setQuantity(
 								model.getWarehouseTableModel()
-										.getItemByName(curItem.getName())
-										.getQuantity()
+										.getItemById(curItem).getQuantity()
 										+ model.getCurrentPurchaseTableModel()
-												.getItemByName(
-														curItem.getName())
+												.getItemById(curItem)
 												.getQuantity());
 			}
 			model.getCurrentPurchaseTableModel().clear();
@@ -176,7 +172,8 @@ public class PurchaseTab {
 
 	/** Event handler for the <code>submit purchase</code> event. */
 	protected void submitPurchaseButtonClicked() {
-		JFrame mainWindow = (JFrame) SwingUtilities.getWindowAncestor(submitPurchase);
+		JFrame mainWindow = (JFrame) SwingUtilities
+				.getWindowAncestor(submitPurchase);
 		ConfirmationWindowUI confirmationWindowUI = new ConfirmationWindowUI(
 				model, mainWindow);
 		confirmationWindowUI.setVisible(true);
