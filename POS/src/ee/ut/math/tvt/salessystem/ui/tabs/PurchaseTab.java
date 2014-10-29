@@ -175,7 +175,7 @@ public class PurchaseTab {
 		JFrame mainWindow = (JFrame) SwingUtilities
 				.getWindowAncestor(submitPurchase);
 		ConfirmationWindowUI confirmationWindowUI = new ConfirmationWindowUI(
-				model, mainWindow);
+				model, mainWindow, this);
 		confirmationWindowUI.setVisible(true);
 		try {
 			log.debug("Contents of the current basket:\n"
@@ -208,9 +208,10 @@ public class PurchaseTab {
 	}
 
 	// switch UI to the state that allows to initiate new purchase
-	private void endSale() {
+	public void endSale() {
 		purchasePane.reset();
-
+		
+		model.getCurrentPurchaseTableModel().clear();
 		cancelPurchase.setEnabled(false);
 		submitPurchase.setEnabled(false);
 		newPurchase.setEnabled(true);

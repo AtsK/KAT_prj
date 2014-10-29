@@ -9,7 +9,7 @@ import ee.ut.math.tvt.salessystem.ui.SalesSystemUI;
 /**
  * Purchase history details model.
  */
-public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
+public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> implements Cloneable{
 	private static final long serialVersionUID = 1L;
 
 	private static final Logger log = Logger.getLogger(PurchaseInfoTableModel.class);
@@ -34,6 +34,15 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
 		
 		}
 		throw new IllegalArgumentException("Column index out of range");
+	}
+	
+	public Object clone(){  
+	    try{  
+	        return super.clone();  
+	    }catch(Exception e){
+	    	log.error("Cloning went  wrong: " + e.getMessage());
+	        return null; 
+	    }
 	}
 
 	@Override

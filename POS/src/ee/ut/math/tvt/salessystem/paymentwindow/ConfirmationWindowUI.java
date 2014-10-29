@@ -24,7 +24,9 @@ import com.jgoodies.looks.windows.WindowsLookAndFeel;
 
 import ee.ut.math.tvt.salessystem.domain.data.Order;
 import ee.ut.math.tvt.salessystem.ui.Utilities;
+import ee.ut.math.tvt.salessystem.ui.model.PurchaseInfoTableModel;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
+import ee.ut.math.tvt.salessystem.ui.tabs.PurchaseTab;
 
 public class ConfirmationWindowUI extends JFrame {
 
@@ -38,15 +40,17 @@ public class ConfirmationWindowUI extends JFrame {
 	private JButton confirmationButton;
 	private JButton cancelButton;
 	private JFrame mainFrame;
+	private PurchaseTab purchaseTab;
 
 	private SalesSystemModel model;
 	
 	private static final long serialVersionUID = 1L;
 
-	public ConfirmationWindowUI(SalesSystemModel model, JFrame mainFrame) {
+	public ConfirmationWindowUI(SalesSystemModel model, JFrame mainFrame, PurchaseTab purchaseTab) {
 		this.model = model;
 		this.sum = model.getCurrentPurchaseTableModel().getTotalSum();
 		this.mainFrame = mainFrame;
+		this.purchaseTab = purchaseTab;
 		
 		mainFrame.setEnabled(false);
 		setTitle("Payment");
@@ -131,6 +135,7 @@ public class ConfirmationWindowUI extends JFrame {
 		confirmationButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				model.getHistoryTableModel().addOrder(createOrder());
+				purchaseTab.endSale();
 				close();
 			}
 		});
@@ -147,7 +152,7 @@ public class ConfirmationWindowUI extends JFrame {
 	
 	private Order createOrder() {
 		
-		Order order = new Order(new Date(), sum, model.getCurrentPurchaseTableModel());
+		Order order = new Order(new Date(), sum, (PurchaseInfoTableModel)model.getCurrentPurchaseTableModel().clone());
 		return order;
 	}
 	
