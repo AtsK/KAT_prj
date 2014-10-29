@@ -73,7 +73,7 @@ public class HistoryTab {
 		selectionModel.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				if (!e.getValueIsAdjusting()) {
+				if (!e.getValueIsAdjusting() && table.getSelectedRow() != -1) {
 					handleSelectionOfRow(table);
 				}
 			}
@@ -101,7 +101,7 @@ public class HistoryTab {
 	private void handleSelectionOfRow(JTable table) {
 		int selectedRow = table.getSelectedRow();
 		new OrderInfoWindowUI(model.getHistoryTableModel().getTableRows()
-				.get(selectedRow).getInfoTable()).setVisible(true);
+				.get(selectedRow), table).setVisible(true);
 	}
 
 

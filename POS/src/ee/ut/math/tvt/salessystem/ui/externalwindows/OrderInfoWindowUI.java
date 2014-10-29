@@ -4,6 +4,10 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -15,20 +19,22 @@ import org.apache.log4j.Logger;
 
 import com.jgoodies.looks.windows.WindowsLookAndFeel;
 
-import ee.ut.math.tvt.salessystem.ui.model.PurchaseInfoTableModel;
+import ee.ut.math.tvt.salessystem.domain.data.Order;
 
 public class OrderInfoWindowUI extends JFrame {
-	private static final Logger log = Logger
-			.getLogger(OrderInfoWindowUI.class);
+	private static final Logger log = Logger.getLogger(OrderInfoWindowUI.class);
 
 	private static final long serialVersionUID = 1L;
 
-	private PurchaseInfoTableModel infoTable;
+	private Order order;
 
-	public OrderInfoWindowUI(PurchaseInfoTableModel infoTable) {
-		this.infoTable = infoTable;
-
-		setTitle("Order details");
+	public OrderInfoWindowUI(Order order, final JTable orderTable) {
+		this.order = order;
+		
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		String title = "Order " + dateFormat.format(order.getDate());
+		
+		setTitle(title);
 		int height = 200;
 		int width = 500;
 		setSize(width, height);
@@ -42,12 +48,19 @@ public class OrderInfoWindowUI extends JFrame {
 
 		}
 
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent we) {
+				orderTable.clearSelection();
+			}
+		});
+
 		drawThings();
 
 	}
 
 	private void drawThings() {
-		JTable table = new JTable(infoTable);
+		JTable table = new JTable(order.getInfoTable());
 
 		setLayout(new GridBagLayout());
 
