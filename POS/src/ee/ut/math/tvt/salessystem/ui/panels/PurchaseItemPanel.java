@@ -10,6 +10,7 @@ import java.util.NoSuchElementException;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -22,6 +23,7 @@ import javax.swing.JTextField;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+
 import org.apache.log4j.Logger;
 
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
@@ -43,6 +45,7 @@ public class PurchaseItemPanel extends JPanel {
 	private JTextField nameField;
 	private JTextField priceField;
 	private JComboBox<String> dropdown;
+	private DefaultComboBoxModel<String> dropdownModel;
 
 	private JButton addItemButton;
 
@@ -92,25 +95,28 @@ public class PurchaseItemPanel extends JPanel {
 		panel.setLayout(new GridLayout(6, 2));
 		panel.setBorder(BorderFactory.createTitledBorder("Product"));
 
-        // Initialize the textfields
-		updateStockItems();
+		// Initialize the textfields
+		initStockItems();
 
 		barCodeField = new JTextField();
 		quantityField = new JTextField("1");
 		nameField = new JTextField();
 		priceField = new JTextField();
 
-		// Fill the dialog fields if the bar code text field loses focus
 		dropdown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				fillDialogFields();
 			}
 		});
-		dropdown.addPopupMenuListener(new javax.swing.event.PopupMenuListener(){
-			public void popupMenuCanceled(PopupMenuEvent e) {}
-			public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {}
+		dropdown.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+			public void popupMenuCanceled(PopupMenuEvent e) {
+			}
+
+			public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+			}
+
 			public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
-				//updateStockItems();
+				updateStockItems();
 			}
 		});
 		barCodeField.setEditable(false);
@@ -170,16 +176,28 @@ public class PurchaseItemPanel extends JPanel {
 
 		return panel;
 	}
-	
-	//Update stockitems list JComboBox list
+
+	// Update stockitems list JComboBox list
+	private void initStockItems() {
+		List<StockItem> stockItems = model.getWarehouseTableModel()
+				.getTableRows();
+		dropdownModel = new DefaultComboBoxModel<String>(
+				new String[] {});
+		for (StockItem item : stockItems) {
+			dropdownModel.addElement(item.getName());
+		}
+		dropdown = new JComboBox<String>(dropdownModel);
+	}
+
+	// Update stockitems list JComboBox list
 	private void updateStockItems() {
-        List<StockItem> stockItems = model.getWarehouseTableModel().getTableRows();
-        Vector<String> selectionFields = new Vector<>();
-        selectionFields.add("");
-        for (StockItem item : stockItems) {
-        	selectionFields.add(item.getName());
-        }
-        dropdown = new JComboBox<String>(selectionFields);
+		List<StockItem> stockItems = model.getWarehouseTableModel()
+				.getTableRows();
+		for (StockItem item : stockItems) {
+			if (dropdownModel.getIndexOf(item.getName()) == -1) {
+				dropdownModel.addElement(item.getName());
+			}
+		}
 	}
 
 	// Fill dialog with data from the "database".
