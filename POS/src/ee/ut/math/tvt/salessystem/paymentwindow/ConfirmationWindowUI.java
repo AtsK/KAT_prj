@@ -135,7 +135,7 @@ public class ConfirmationWindowUI extends JFrame {
 	
 	private Order createOrder() {
 		
-		Order order = new Order(new Date(), 1000.0);
+		Order order = new Order(new Date(), sum, model.getCurrentPurchaseTableModel());
 		return order;
 	}
 	

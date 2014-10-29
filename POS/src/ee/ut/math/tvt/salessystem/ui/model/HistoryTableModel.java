@@ -88,5 +88,9 @@ public class HistoryTableModel extends AbstractTableModel {
     public String getColumnName(final int columnIndex) {
         return headers[columnIndex];
     }
+	
+	public List<Order> getTableRows() {
+		return rows;
+	}
 
 }
