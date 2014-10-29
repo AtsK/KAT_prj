@@ -5,15 +5,14 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.DocumentEvent;
@@ -26,7 +25,6 @@ import com.jgoodies.looks.windows.WindowsLookAndFeel;
 import ee.ut.math.tvt.salessystem.domain.data.Order;
 import ee.ut.math.tvt.salessystem.ui.Utilities;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
-import ee.ut.math.tvt.salessystem.ui.tabs.PurchaseTab;
 
 public class ConfirmationWindowUI extends JFrame {
 
@@ -64,6 +62,14 @@ public class ConfirmationWindowUI extends JFrame {
 		} catch (UnsupportedLookAndFeelException e1) {
 
 		}
+		
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        addWindowListener( new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent we) {
+            	close();
+            }
+        } );
 
 		drawThings();
 
@@ -120,21 +126,18 @@ public class ConfirmationWindowUI extends JFrame {
 		add(change);
 		add(changeAmountField);
 		
-		
 
 		confirmationButton = new JButton("Confirm");
 		confirmationButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				model.getHistoryTableModel().addOrder(createOrder());
-				mainFrame.setEnabled(true);
-				dispose();
+				close();
 			}
 		});
 		cancelButton = new JButton("Cancel");
 		cancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mainFrame.setEnabled(true);
-				dispose();
+				close();
 			}
 		});
 
@@ -146,6 +149,11 @@ public class ConfirmationWindowUI extends JFrame {
 		
 		Order order = new Order(new Date(), sum, model.getCurrentPurchaseTableModel());
 		return order;
+	}
+	
+	private void close() {
+		mainFrame.setEnabled(true);
+		dispose();
 	}
 	
 }
