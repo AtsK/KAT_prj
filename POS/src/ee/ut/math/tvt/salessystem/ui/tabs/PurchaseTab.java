@@ -176,16 +176,6 @@ public class PurchaseTab {
 		ConfirmationWindowUI confirmationWindowUI = new ConfirmationWindowUI(
 				model, mainWindow, this);
 		confirmationWindowUI.setVisible(true);
-		try {
-			log.debug("Contents of the current basket:\n"
-					+ model.getCurrentPurchaseTableModel());
-			domainController.submitCurrentPurchase(model
-					.getCurrentPurchaseTableModel().getTableRows());
-			endSale();
-			model.getCurrentPurchaseTableModel().clear();
-		} catch (VerificationFailedException e1) {
-			log.error(e1.getMessage());
-		}
 	}
 
 	// method that makes new window if the order is confirmed
