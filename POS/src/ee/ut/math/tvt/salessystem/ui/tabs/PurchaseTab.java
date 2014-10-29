@@ -151,7 +151,6 @@ public class PurchaseTab {
 		log.info("Sale cancelled");
 		try {
 			domainController.cancelCurrentPurchase();
-			endSale();
 			for (SoldItem it : model.getCurrentPurchaseTableModel()
 					.getTableRows()) {
 				long curItem = it.getStockItem().getId();
@@ -164,7 +163,7 @@ public class PurchaseTab {
 												.getItemById(curItem)
 												.getQuantity());
 			}
-			model.getCurrentPurchaseTableModel().clear();
+			endSale();
 		} catch (VerificationFailedException e1) {
 			log.error(e1.getMessage());
 		}
