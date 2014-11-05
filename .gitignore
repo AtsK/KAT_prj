@@ -42,3 +42,4 @@ dist/
 data/POSdb.lck
 data/POSdb.log
 data/POSdb.tmp/
+POS/data/POSdb.properties
