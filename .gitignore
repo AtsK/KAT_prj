@@ -39,7 +39,7 @@ build/
 dist/
 
 #Ignore some DB files
-data/POSdb.lck
-data/POSdb.log
-data/POSdb.tmp/
+POS/data/POSdb.lck
+POS/data/POSdb.log
+POS/data/POSdb.tmp/
 POS/data/POSdb.properties
