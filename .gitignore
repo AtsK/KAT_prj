@@ -37,3 +37,8 @@ local.properties
 #Ignore ant build specific files
 build/
 dist/
+
+#Ignore some DB files
+data/POSdb.lck
+data/POSdb.log
+data/POSdb.tmp/
