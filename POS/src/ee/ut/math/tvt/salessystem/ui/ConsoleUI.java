@@ -112,6 +112,8 @@ public class ConsoleUI {
 			showStock(warehouse);
 		else if (c[0].equals("c"))
 			showStock(cart);
+		else if (c[0].equals("q"))
+			dc.endSession();
 		else if (c[0].equals("p"))
 			try {
 			    List<SoldItem> soldItems = new ArrayList<SoldItem>();
