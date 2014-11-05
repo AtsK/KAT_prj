@@ -7,16 +7,26 @@
 	<property name="build.dir" location="build/" />
 	<property name="classes.dir" location="${build.dir}/classes/" />
 	<property name="jar.dir" location="${build.dir}/jar/" />
+	<property name="conf.dir" location="conf/" />
 	<property name="lib.dir" location="lib/" />
-	<property name="conf.dir" location="etc/" />
 
 	<property name="main-class" value="ee.ut.math.tvt.KAT.Intro" />
 	<property name="jar.name" value="KAT" />
 	<property name="version" location="version.properties" />
 
+	<!-- database variables -->
+	<property name="data.dir" value="${basedir}/data" />
+	<property name="db.file" value="${data.dir}/POSdb" />
+	<property name="db.alias" value="POS" />
+	<property name="db.url" value="jdbc:hsqldb:hsql://localhost/POS" />
+	<property name="lib.hibernate.dir" value="${lib.dir}/hibernate" />
+
 	<!-- Path reference for external libraries -->
 	<path id="compile.classpath">
 		<fileset dir="${lib.dir}">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="${lib.hibernate.dir}">
 			<include name="*.jar" />
 		</fileset>
 	</path>
@@ -125,6 +135,18 @@
 		<exec executable="git">
 			<arg line="push --tags https://${github.username}:${github.password}@github.com/AtsK/KAT_prj.git" />
 		</exec>
+	</target>
+
+	<target name="dbmanager" description="Start the HSQLDB manager">
+		<java classname="org.hsqldb.util.DatabaseManagerSwing" classpathref="run.classpath" fork="yes">
+			<arg line="--user sa --url ${db.url}" />
+		</java>
+	</target>
+
+	<target name="startdb" description="Start the HSQLDB with the default params">
+		<java classname="org.hsqldb.Server" classpathref="run.classpath" fork="yes">
+			<arg line="-database.0 '${db.file}' -dbname.0 '${db.alias}'" />
+		</java>
 	</target>
 
 </project>
