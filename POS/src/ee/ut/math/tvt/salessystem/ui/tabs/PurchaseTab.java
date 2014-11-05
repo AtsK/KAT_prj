@@ -4,8 +4,8 @@ import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
-import ee.ut.math.tvt.salessystem.paymentwindow.ConfirmationWindowUI;
 import ee.ut.math.tvt.salessystem.ui.SalesSystemUI;
+import ee.ut.math.tvt.salessystem.ui.externalwindows.ConfirmationWindowUI;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 import ee.ut.math.tvt.salessystem.ui.panels.PurchaseItemPanel;
 

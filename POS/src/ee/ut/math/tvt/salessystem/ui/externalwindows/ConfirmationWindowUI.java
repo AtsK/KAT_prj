@@ -1,4 +1,4 @@
-package ee.ut.math.tvt.salessystem.paymentwindow;
+package ee.ut.math.tvt.salessystem.ui.externalwindows;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;

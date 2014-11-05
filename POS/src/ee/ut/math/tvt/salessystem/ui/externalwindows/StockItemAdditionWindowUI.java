@@ -18,7 +18,6 @@ import org.apache.log4j.Logger;
 import com.jgoodies.looks.windows.WindowsLookAndFeel;
 
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
-import ee.ut.math.tvt.salessystem.paymentwindow.ConfirmationWindowUI;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 
 public class StockItemAdditionWindowUI extends JFrame {
