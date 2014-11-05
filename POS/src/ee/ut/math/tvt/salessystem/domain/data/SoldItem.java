@@ -26,13 +26,13 @@ public class SoldItem implements Cloneable, DisplayableItem {
     private StockItem stockItem;
     
     
-    @Column
+    @Column(name = "name")
     private String name;
     
-    @Column
+    @Column(name = "quantity")
     private Integer quantity;
     
-    @Column
+    @Column(name = "price")
     private double price;
     
     public SoldItem(StockItem stockItem, int quantity) {
