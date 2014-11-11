@@ -44,6 +44,8 @@ public class Order {
 		this.price = price;
 		this.items = items;
 	}
+	
+	public Order() {}
 
 	public Date getDate() {
 		return date;

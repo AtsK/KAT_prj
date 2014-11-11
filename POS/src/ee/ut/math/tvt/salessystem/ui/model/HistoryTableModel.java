@@ -99,4 +99,9 @@ public class HistoryTableModel extends AbstractTableModel {
 		return rows;
 	}
 
+	public void populateWithData(List<Order> data) {
+        rows.clear();
+        rows.addAll(data);	
+	}
+
 }

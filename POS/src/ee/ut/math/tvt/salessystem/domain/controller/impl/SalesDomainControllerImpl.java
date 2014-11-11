@@ -3,6 +3,7 @@ package ee.ut.math.tvt.salessystem.domain.controller.impl;
 import java.util.List;
 
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
+import ee.ut.math.tvt.salessystem.domain.data.Order;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
@@ -31,22 +32,13 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 	}
 
 	public List<StockItem> loadWarehouseState() {
-		// XXX mock implementation
-//		List<StockItem> dataset = new ArrayList<StockItem>();
-//
-//		StockItem chips = new StockItem(1l, "Lays chips", "Potato chips", 11.0, 5);
-//		StockItem chupaChups = new StockItem(2l, "Chupa-chups", "Sweets", 8.0, 8);
-//	    StockItem frankfurters = new StockItem(3l, "Frankfurters", "Beer sauseges", 15.0, 12);
-//	    StockItem beer = new StockItem(4l, "Free Beer", "Student's delight", 0.0, 100);
-//	    StockItem dumplings = new StockItem(5l, "Dumplings", "Cheap dumplings", 10.0, 100);
-//
-//		dataset.add(chips);
-//		dataset.add(chupaChups);
-//		dataset.add(frankfurters);
-//		dataset.add(beer);
-//		dataset.add(dumplings);
 		HibernateDataService service = new HibernateDataService();
 		return service.getStockItems();
+	}
+	
+	public List<Order> loadOrderHistory() {
+		HibernateDataService service = new HibernateDataService();
+		return service.getOrders();
 	}
 
 	public void endSession() {

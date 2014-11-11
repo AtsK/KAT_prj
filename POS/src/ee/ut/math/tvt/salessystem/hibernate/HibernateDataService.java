@@ -34,4 +34,9 @@ public class HibernateDataService {
 		session.save(order);
 		tx.commit();
 	}
+	
+	public List<Order> getOrders() {
+		List<Order> result = session.createQuery("from Order").list();
+		return result;
+	}
 }
