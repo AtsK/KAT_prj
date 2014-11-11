@@ -17,9 +17,6 @@ private static final String MODE = "console";
 	
 		final SalesDomainController domainController = new SalesDomainControllerImpl();
 		
-		HibernateDataService service = new HibernateDataService();
-		log.info(service.getStockItems().get(1).getName());
-		
 		
 		if (args.length == 1 && args[0].equals(MODE)) {
 			log.debug("Mode: " + MODE);

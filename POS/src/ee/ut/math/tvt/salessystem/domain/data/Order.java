@@ -1,6 +1,7 @@
 package ee.ut.math.tvt.salessystem.domain.data;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,8 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import ee.ut.math.tvt.salessystem.ui.model.PurchaseInfoTableModel;
+import javax.persistence.Transient;
 
 
 @Entity
@@ -27,13 +27,13 @@ public class Order {
 	@Column(name = "price")
 	private Double price;
 	
+	@Transient
+	private List<SoldItem> items;
 	
-	private PurchaseInfoTableModel infoTable;
-	
-	public Order(Date date, Double price, PurchaseInfoTableModel infoTable) {
+	public Order(Date date, Double price, List<SoldItem> items) {
 		this.date = date;
 		this.price = price;
-		this.infoTable = infoTable;
+		this.items = items;
 	}
 
 	public Date getDate() {
@@ -44,9 +44,8 @@ public class Order {
 		return price;
 	}
 	
-	public PurchaseInfoTableModel getInfoTable() {
-		return infoTable;
+	public List<SoldItem> getItems() {
+		return items;
 	}
-	
 	
 }

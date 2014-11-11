@@ -20,6 +20,7 @@ import org.apache.log4j.Logger;
 import com.jgoodies.looks.windows.WindowsLookAndFeel;
 
 import ee.ut.math.tvt.salessystem.domain.data.Order;
+import ee.ut.math.tvt.salessystem.ui.model.PurchaseInfoTableModel;
 
 public class OrderInfoWindowUI extends JFrame {
 	private static final Logger log = Logger.getLogger(OrderInfoWindowUI.class);
@@ -60,7 +61,9 @@ public class OrderInfoWindowUI extends JFrame {
 	}
 
 	private void drawThings() {
-		JTable table = new JTable(order.getInfoTable());
+		PurchaseInfoTableModel infoTable = new PurchaseInfoTableModel();
+		infoTable.populateWithData(order.getItems());
+		JTable table = new JTable(infoTable);
 
 		setLayout(new GridBagLayout());
 

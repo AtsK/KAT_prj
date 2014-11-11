@@ -24,7 +24,6 @@ import com.jgoodies.looks.windows.WindowsLookAndFeel;
 
 import ee.ut.math.tvt.salessystem.domain.data.Order;
 import ee.ut.math.tvt.salessystem.ui.Utilities;
-import ee.ut.math.tvt.salessystem.ui.model.PurchaseInfoTableModel;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 import ee.ut.math.tvt.salessystem.ui.tabs.PurchaseTab;
 
@@ -152,7 +151,7 @@ public class ConfirmationWindowUI extends JFrame {
 	
 	private Order createOrder() {
 		
-		Order order = new Order(new Date(), sum, (PurchaseInfoTableModel)model.getCurrentPurchaseTableModel().clone());
+		Order order = new Order(new Date(), sum, model.getCurrentPurchaseTableModel().getTableRows());
 		return order;
 	}
 	
