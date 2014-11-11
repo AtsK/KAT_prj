@@ -153,7 +153,7 @@ public class PurchaseTab {
 			domainController.cancelCurrentPurchase();
 			for (SoldItem it : model.getCurrentPurchaseTableModel()
 					.getTableRows()) {
-				long curItem = it.getStockItem().getId();
+				long curItem = it.getStockItem().getStockItemId();
 				StockItem stockItem = model.getWarehouseTableModel()
 						.getItemById(curItem);
 				int quantity = stockItem.getQuantity()

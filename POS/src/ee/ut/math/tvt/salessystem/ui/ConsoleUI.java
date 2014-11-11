@@ -69,7 +69,7 @@ public class ConsoleUI {
 	private void showStock(List<StockItem> stock) {
 		System.out.println("-------------------------");
 		for (StockItem si : stock) {
-			System.out.println(si.getId() + " "
+			System.out.println(si.getStockItemId() + " "
 					+ si.getName() + " "
 					+ si.getPrice() + "Euro ("
 					+ si.getQuantity() + " items)");
@@ -95,7 +95,7 @@ public class ConsoleUI {
 
 	private StockItem getStockItemById(int id) {
 		for (StockItem item : warehouse) {
-			if (item.getId() == id)
+			if (item.getStockItemId() == id)
 				return item;
 		}
 		throw new NoSuchElementException();

@@ -85,7 +85,7 @@ public class StockItem implements Cloneable, DisplayableItem {
         this.price = price;
     }
 
-    public Long getId() {
+    public Long getStockItemId() {
         return id;
     }
 
@@ -123,7 +123,7 @@ public class StockItem implements Cloneable, DisplayableItem {
     
     public Object clone() {
         StockItem item =
-            new StockItem(getId(), getName(), getDescription(), getPrice(), getQuantity());
+            new StockItem(getStockItemId(), getName(), getDescription(), getPrice(), getQuantity());
         return item;
     }
 		

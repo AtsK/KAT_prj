@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.loader.entity.EntityLoader;
 
+import ee.ut.math.tvt.salessystem.domain.data.Order;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.util.HibernateUtil;
 
@@ -27,6 +27,11 @@ public class HibernateDataService {
 	public void updateStockItem(StockItem item) {
 		Transaction tx = session.beginTransaction();
 		session.merge(item);
+		tx.commit();
+	}
+	public void addOrder(Order order) {
+		Transaction tx = session.beginTransaction();
+		session.save(order);
 		tx.commit();
 	}
 }

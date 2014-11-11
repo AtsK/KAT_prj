@@ -7,6 +7,6 @@ public interface DisplayableItem {
 	/**
 	 * Id of entity.
 	 */
-	public Long getId();
+	public Long getStockItemId();
 	public String getName();
 }

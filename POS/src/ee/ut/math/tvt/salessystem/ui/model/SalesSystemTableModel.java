@@ -53,7 +53,7 @@ public abstract class SalesSystemTableModel<T extends DisplayableItem> extends
     // search for item with the specified id
     public T getItemById(final long id) {
         for (final T item : rows) {
-            if (item.getId() == id)
+            if (item.getStockItemId() == id)
                 return item;
         }
         throw new NoSuchElementException();

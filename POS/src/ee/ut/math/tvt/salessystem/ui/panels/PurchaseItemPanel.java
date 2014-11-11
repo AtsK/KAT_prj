@@ -207,7 +207,7 @@ public class PurchaseItemPanel extends JPanel {
 			nameField.setText(stockItem.getName());
 			String priceString = String.valueOf(stockItem.getPrice());
 			priceField.setText(priceString);
-			barCodeField.setText(stockItem.getId().toString());
+			barCodeField.setText(stockItem.getStockItemId().toString());
 		} else {
 			log.error("Couldn't find the item.");
 			reset();
@@ -252,7 +252,7 @@ public class PurchaseItemPanel extends JPanel {
 				quantity = 1;
 			}
 			int availableAmount = model.getWarehouseTableModel()
-					.getItemById(stockItem.getId()).getQuantity();
+					.getItemById(stockItem.getStockItemId()).getQuantity();
 			if (availableAmount >= quantity) {
 				model.getCurrentPurchaseTableModel().addItem(
 						new SoldItem(stockItem, quantity));

@@ -20,7 +20,7 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> impl
 	protected Object getColumnValue(SoldItem item, int columnIndex) {
 		switch (columnIndex) {
 		case 0:
-			return item.getId();
+			return item.getStockItemId();
 		case 1:
 			return item.getName();
 		case 2:
@@ -52,7 +52,7 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> impl
 		buffer.append("\n");
 
 		for (final SoldItem item : rows) {
-			buffer.append(item.getId() + "\t");
+			buffer.append(item.getStockItemId() + "\t");
 			buffer.append(item.getName() + "\t");
 			buffer.append(item.getPrice() + "\t");
 			buffer.append(item.getQuantity() + "\t");

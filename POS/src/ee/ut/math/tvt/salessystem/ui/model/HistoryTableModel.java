@@ -9,6 +9,7 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 import ee.ut.math.tvt.salessystem.domain.data.Order;
+import ee.ut.math.tvt.salessystem.hibernate.HibernateDataService;
 
 public class HistoryTableModel extends AbstractTableModel {
 
@@ -16,11 +17,15 @@ public class HistoryTableModel extends AbstractTableModel {
 
 	private List<Order> rows;
 	private final String[] headers;
+	
+	private HibernateDataService service;
 
 	public HistoryTableModel() {
 		headers = new String[] { "Date of the order", "Time of the order",
 				"Total order price" };
 		rows = new ArrayList<>();
+		
+		service = new HibernateDataService();
 	}
 
 	public String toString() {
@@ -50,6 +55,7 @@ public class HistoryTableModel extends AbstractTableModel {
 	public void addOrder(Order order) {
 		rows.add(order);
 		fireTableDataChanged();
+		service.addOrder(order);
 	}
 
 	@Override

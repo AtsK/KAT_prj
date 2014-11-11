@@ -27,7 +27,7 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 	protected Object getColumnValue(StockItem item, int columnIndex) {
 		switch (columnIndex) {
 		case 0:
-			return item.getId();
+			return item.getStockItemId();
 		case 1:
 			return item.getName();
 		case 2:
@@ -45,7 +45,7 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 	 */
 	public void addItem(final StockItem stockItem) {
 		try {
-			StockItem item = getItemById(stockItem.getId());
+			StockItem item = getItemById(stockItem.getStockItemId());
 			item.setQuantity(item.getQuantity() + stockItem.getQuantity());
 			log.debug("Found existing item " + stockItem.getName()
 					+ " increased quantity by " + stockItem.getQuantity());
@@ -69,7 +69,7 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 		buffer.append("\n");
 
 		for (final StockItem stockItem : rows) {
-			buffer.append(stockItem.getId() + "\t");
+			buffer.append(stockItem.getStockItemId() + "\t");
 			buffer.append(stockItem.getName() + "\t");
 			buffer.append(stockItem.getPrice() + "\t");
 			buffer.append(stockItem.getQuantity() + "\t");

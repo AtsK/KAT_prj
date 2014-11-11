@@ -70,8 +70,8 @@ public class StockItemAdditionWindowUI extends JFrame {
 
 		long maxIdNum = 0;
 		for (StockItem item : model.getWarehouseTableModel().getTableRows()) {
-			if (item.getId() > maxIdNum) {
-				maxIdNum = item.getId();
+			if (item.getStockItemId() > maxIdNum) {
+				maxIdNum = item.getStockItemId();
 			}
 		}
 		idField = new JTextField(String.valueOf(maxIdNum + 1));

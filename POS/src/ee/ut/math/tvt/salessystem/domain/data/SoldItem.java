@@ -20,12 +20,14 @@ public class SoldItem implements Cloneable, DisplayableItem {
 
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+	
+	@Column(name = "STOCKITEM_ID")
+	private long stockItemId;
 	
 	@Transient
     private StockItem stockItem;
-    
     
     @Column(name = "name")
     private String name;
@@ -33,12 +35,12 @@ public class SoldItem implements Cloneable, DisplayableItem {
     @Column(name = "quantity")
     private Integer quantity;
     
-    @Column(name = "price")
+    @Column(name = "ITEMPRICE")
     private double price;
     
     public SoldItem(StockItem stockItem, int quantity) {
         this.stockItem = stockItem;
-        this.id = stockItem.getId();
+        this.stockItemId = stockItem.getStockItemId();
         this.name = stockItem.getName();
         this.price = stockItem.getPrice();
         this.quantity = quantity;
@@ -46,12 +48,8 @@ public class SoldItem implements Cloneable, DisplayableItem {
     }
     
     
-    public Long getId() {
-        return id;
-    }
-    
-    public void setId(Long id) {
-        this.id = id;
+    public Long getStockItemId() {
+        return stockItemId;
     }
     
     public String getName() {
