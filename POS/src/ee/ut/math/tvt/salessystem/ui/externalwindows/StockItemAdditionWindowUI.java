@@ -68,41 +68,20 @@ public class StockItemAdditionWindowUI extends JFrame {
 
 	private void drawThings() {
 
-		idField = new JTextField(String.valueOf(model.getWarehouseTableModel()
-				.getRowCount() + 1));
+		long maxIdNum = 0;
+		for (StockItem item : model.getWarehouseTableModel().getTableRows()) {
+			if (item.getId() > maxIdNum) {
+				maxIdNum = item.getId();
+			}
+		}
+		idField = new JTextField(String.valueOf(maxIdNum + 1));
 		nameField = new JTextField("Name");
 		priceField = new JTextField("0");
 		descriptionField = new JTextField("Description of good");
 		quantityField = new JTextField("1");
 
 		idField.setEnabled(false);
-		// paymentField.getDocument().addDocumentListener(new DocumentListener()
-		// {
-		// @Override
-		// public void insertUpdate(DocumentEvent e) {
-		// removeUpdate(e);
-		// }
-		//
-		// @Override
-		// public void removeUpdate(DocumentEvent e) {
-		// if (Utilities.isFloat(paymentField.getText())) {
-		// confirmationButton.setEnabled(true);
-		// changeAmountField.setText(String.valueOf(Double
-		// .parseDouble(paymentField.getText()) - sum));
-		// } else {
-		// confirmationButton.setEnabled(false);
-		// }
-		// }
-		//
-		// @Override
-		// public void changedUpdate(DocumentEvent e) {
-		// }
-		// });
-		//
-		// sumField.setEditable(false);
-		// paymentField.setEditable(true);
-		// changeAmountField.setEditable(false);
-
+		
 		JLabel id = new JLabel("Id: ");
 		JLabel name = new JLabel("Name: ");
 		JLabel price = new JLabel("Price: ");

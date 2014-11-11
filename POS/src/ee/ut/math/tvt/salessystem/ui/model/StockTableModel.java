@@ -49,12 +49,13 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 			item.setQuantity(item.getQuantity() + stockItem.getQuantity());
 			log.debug("Found existing item " + stockItem.getName()
 					+ " increased quantity by " + stockItem.getQuantity());
-			service.addStockItem(item);
+			service.updateStockItem(item);
 		}
 		catch (NoSuchElementException e) {
 			rows.add(stockItem);
 			log.debug("Added " + stockItem.getName()
 					+ " quantity of " + stockItem.getQuantity());
+			service.addStockItem(stockItem);
 		}
 		fireTableDataChanged();
 	}
