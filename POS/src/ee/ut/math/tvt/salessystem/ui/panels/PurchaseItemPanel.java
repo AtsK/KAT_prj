@@ -181,8 +181,7 @@ public class PurchaseItemPanel extends JPanel {
 	private void initStockItems() {
 		List<StockItem> stockItems = model.getWarehouseTableModel()
 				.getTableRows();
-		dropdownModel = new DefaultComboBoxModel<String>(
-				new String[] {});
+		dropdownModel = new DefaultComboBoxModel<String>(new String[] {});
 		for (StockItem item : stockItems) {
 			dropdownModel.addElement(item.getName());
 		}
@@ -257,8 +256,8 @@ public class PurchaseItemPanel extends JPanel {
 			if (availableAmount >= quantity) {
 				model.getCurrentPurchaseTableModel().addItem(
 						new SoldItem(stockItem, quantity));
-				model.getWarehouseTableModel().getItemById(stockItem.getId())
-						.setQuantity(availableAmount - quantity);
+				model.getWarehouseTableModel().setItemQuantity(stockItem,
+						availableAmount - quantity);
 			} else {
 				JOptionPane.showMessageDialog(null,
 						"Requested item amount exceeds availability!",

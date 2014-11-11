@@ -1,10 +1,12 @@
 package ee.ut.math.tvt.salessystem.ui.model;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.apache.log4j.Logger;
 
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
+import ee.ut.math.tvt.salessystem.hibernate.HibernateDataService;
 
 /**
  * Stock item table model.
@@ -13,9 +15,12 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 	private static final long serialVersionUID = 1L;
 
 	private static final Logger log = Logger.getLogger(StockTableModel.class);
+	
+	private HibernateDataService service;
 
 	public StockTableModel() {
 		super(new String[] {"Id", "Name", "Price", "Quantity"});
+		service = new HibernateDataService();
 	}
 
 	@Override
@@ -44,6 +49,7 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 			item.setQuantity(item.getQuantity() + stockItem.getQuantity());
 			log.debug("Found existing item " + stockItem.getName()
 					+ " increased quantity by " + stockItem.getQuantity());
+			service.addStockItem(item);
 		}
 		catch (NoSuchElementException e) {
 			rows.add(stockItem);
@@ -70,6 +76,21 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 		}
 
 		return buffer.toString();
+	}
+	
+	public void setItemQuantity(StockItem item, int quantity) {
+		item.setQuantity(quantity);
+		syncDatabaseItem(item);
+	}
+	
+	public void syncDatabaseItem(StockItem item) {
+		service.updateStockItem(item);
+	}
+	public void syncDatabase() {
+		List<StockItem> Items = getTableRows();
+		for(StockItem item : Items) {
+			syncDatabaseItem(item);
+		}
 	}
 	
 }

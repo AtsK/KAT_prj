@@ -154,14 +154,13 @@ public class PurchaseTab {
 			for (SoldItem it : model.getCurrentPurchaseTableModel()
 					.getTableRows()) {
 				long curItem = it.getStockItem().getId();
-				model.getWarehouseTableModel()
-						.getItemById(curItem)
-						.setQuantity(
-								model.getWarehouseTableModel()
-										.getItemById(curItem).getQuantity()
-										+ model.getCurrentPurchaseTableModel()
-												.getItemById(curItem)
-												.getQuantity());
+				StockItem stockItem = model.getWarehouseTableModel()
+						.getItemById(curItem);
+				int quantity = stockItem.getQuantity()
+						+ model.getCurrentPurchaseTableModel()
+								.getItemById(curItem).getQuantity();
+				model.getWarehouseTableModel().setItemQuantity(stockItem,
+						quantity);
 			}
 			endSale();
 		} catch (VerificationFailedException e1) {
@@ -199,7 +198,7 @@ public class PurchaseTab {
 	// switch UI to the state that allows to initiate new purchase
 	public void endSale() {
 		purchasePane.reset();
-		
+
 		model.getCurrentPurchaseTableModel().clear();
 		cancelPurchase.setEnabled(false);
 		submitPurchase.setEnabled(false);
