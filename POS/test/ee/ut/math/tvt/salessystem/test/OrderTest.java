@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import junit.framework.Assert;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -53,7 +51,6 @@ public class OrderTest {
 		oneitem.add(item1);
 		items2.add(item1);
 		
-		System.out.println("Items are:" + items.toString());
 		
 		String date = "2014-10-10 12:12:12";
 		Date date1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(date);
@@ -80,14 +77,14 @@ public class OrderTest {
 			}
 			
 		}
-		Assert.assertEquals(1, i);
+		assertEquals(1, i);
 	}
 		
 	@Test
 	public void testGetSumWithNoItems(){
 		double price = order1.getPrice();
 		
-		Assert.assertEquals(0.0, price, 0.00001);
+		assertEquals(0.0, price, 0.00001);
 	}
 	
 	@Test
