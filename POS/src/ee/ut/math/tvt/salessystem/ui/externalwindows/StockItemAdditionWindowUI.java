@@ -24,15 +24,6 @@ public class StockItemAdditionWindowUI extends JFrame {
 	private static final Logger log = Logger
 			.getLogger(ConfirmationWindowUI.class);
 
-	// private Long id;
-	//
-	// private String name;
-	//
-	// private double price;
-	//
-	// private String description;
-	//
-	// private int quantity;
 	private SalesSystemModel model;
 
 	private JTextField idField;
