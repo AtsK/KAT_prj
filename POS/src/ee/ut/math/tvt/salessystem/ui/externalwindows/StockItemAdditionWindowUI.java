@@ -18,6 +18,7 @@ import org.apache.log4j.Logger;
 import com.jgoodies.looks.windows.WindowsLookAndFeel;
 
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
+import ee.ut.math.tvt.salessystem.hibernate.HibernateDataService;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 
 public class StockItemAdditionWindowUI extends JFrame {
@@ -104,6 +105,8 @@ public class StockItemAdditionWindowUI extends JFrame {
 						.getText(), Double.parseDouble(priceField.getText()),
 						Integer.parseInt(quantityField.getText()));
 				model.getWarehouseTableModel().addItem(addedItem);
+				HibernateDataService service = new HibernateDataService();
+				service.updateStockItem(addedItem);
 				dispose();
 			}
 		});

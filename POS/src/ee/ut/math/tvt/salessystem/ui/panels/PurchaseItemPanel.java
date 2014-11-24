@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.NoSuchElementException;
+
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -26,6 +27,7 @@ import org.apache.log4j.Logger;
 
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
+import ee.ut.math.tvt.salessystem.hibernate.HibernateDataService;
 import ee.ut.math.tvt.salessystem.ui.Utilities;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 
@@ -256,6 +258,8 @@ public class PurchaseItemPanel extends JPanel {
 						new SoldItem(stockItem, quantity));
 				model.getWarehouseTableModel().setItemQuantity(stockItem,
 						availableAmount - quantity);
+				HibernateDataService service = new HibernateDataService();
+				service.updateStockItem(stockItem);
 			} else {
 				JOptionPane.showMessageDialog(null,
 						"Requested item amount exceeds availability!",

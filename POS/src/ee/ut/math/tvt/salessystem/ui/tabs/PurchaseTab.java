@@ -19,6 +19,7 @@ import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
+import ee.ut.math.tvt.salessystem.hibernate.HibernateDataService;
 import ee.ut.math.tvt.salessystem.ui.externalwindows.ConfirmationWindowUI;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 import ee.ut.math.tvt.salessystem.ui.panels.PurchaseItemPanel;
@@ -160,6 +161,8 @@ public class PurchaseTab {
 								.getItemById(curItem).getQuantity();
 				model.getWarehouseTableModel().setItemQuantity(stockItem,
 						quantity);
+				HibernateDataService service = new HibernateDataService();
+				service.updateStockItem(stockItem);
 			}
 			endSale();
 		} catch (VerificationFailedException e1) {

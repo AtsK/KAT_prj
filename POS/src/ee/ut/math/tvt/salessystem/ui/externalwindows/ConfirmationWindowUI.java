@@ -23,6 +23,7 @@ import org.apache.log4j.Logger;
 import com.jgoodies.looks.windows.WindowsLookAndFeel;
 
 import ee.ut.math.tvt.salessystem.domain.data.Order;
+import ee.ut.math.tvt.salessystem.hibernate.HibernateDataService;
 import ee.ut.math.tvt.salessystem.ui.Utilities;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 import ee.ut.math.tvt.salessystem.ui.tabs.PurchaseTab;
@@ -133,7 +134,10 @@ public class ConfirmationWindowUI extends JFrame {
 		confirmationButton = new JButton("Confirm");
 		confirmationButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				model.getHistoryTableModel().addOrder(createOrder());
+				Order newOrder = createOrder();
+				model.getHistoryTableModel().addOrder(newOrder);
+				HibernateDataService service = new HibernateDataService();
+				service.addOrder(newOrder);
 				purchaseTab.endSale();
 				close();
 			}
