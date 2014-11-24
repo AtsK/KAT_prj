@@ -37,9 +37,8 @@ public class Order {
     )
 	private List<SoldItem> items;
 	
-	public Order(Date date, Double price, List<SoldItem> items) {
+	public Order(Date date, List<SoldItem> items) {
 		this.date = date;
-		this.price = price;
 		this.items = items;
 	}
 	
@@ -50,6 +49,11 @@ public class Order {
 	}
 
 	public Double getPrice() {
+		Double price = 0.0;
+		if (items.isEmpty()) return price;
+		for (SoldItem item : items) {
+			price += item.getPrice()*item.getQuantity();
+		}
 		return price;
 	}
 	
