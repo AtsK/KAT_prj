@@ -48,8 +48,8 @@ public class Order {
 		return date;
 	}
 
-	public Double getPrice() {
-		Double price = 0.0;
+	public double getPrice() {
+		double price = 0.0;
 		if (items.isEmpty()) return price;
 		for (SoldItem item : items) {
 			price += item.getPrice()*item.getQuantity();
