@@ -89,4 +89,17 @@ public class SoldItem implements Cloneable, DisplayableItem {
         this.stockItem = stockItem;
     }
     
+    @Override
+    public boolean equals(Object obj) {
+		if (obj == this) {
+			return true;
+		}
+
+		if (obj == null || obj.getClass() != this.getClass()) {
+			return false;
+		}
+		SoldItem item = (SoldItem) obj;
+		return this.stockItem.equals(item) && this.quantity == item.quantity;
+    }
+    
 }
