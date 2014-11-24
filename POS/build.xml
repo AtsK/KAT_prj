@@ -54,9 +54,7 @@
 	</path>
 
 	<path id="test.classpath">
-		<fileset dir="${lib.dir}">
-			<include name="*.jar" />
-		</fileset>
+		<path refid="compile.classpath" />
 		<pathelement path="${classes.dir}/" />
 		<pathelement path="${build.test.dir}/" />
 	</path>
