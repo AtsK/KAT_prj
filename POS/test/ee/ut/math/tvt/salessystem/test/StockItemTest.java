@@ -1,5 +1,7 @@
 package ee.ut.math.tvt.salessystem.test;
 
+import junit.framework.Assert;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,7 +21,14 @@ public class StockItemTest {
 	@Test
 	public void testClone() {
 		item2 = (StockItem) item1.clone();
-		// Something more here to test if the objects actually have same
-		// attributes.
+		Assert.assertEquals(item1, item2);
+	}
+	
+	@Test
+	public void testColumn() {
+		Assert.assertEquals(item1.getColumn(0), item1.getStockItemId());
+		Assert.assertEquals(item1.getColumn(1), item1.getName());
+		Assert.assertEquals(item1.getColumn(2), item1.getPrice());
+		Assert.assertEquals(item1.getColumn(3), item1.getQuantity());
 	}
 }
