@@ -22,7 +22,6 @@
 	<classpathentry kind="lib" path="lib/xml-apis.jar"/>
 	<classpathentry kind="lib" path="lib/commons-logging-1.1.1.jar"/>
 	<classpathentry kind="lib" path="lib/hsqldb.jar"/>
-	<classpathentry kind="lib" path="lib/lib/junit-4.10.jar"/>
 	<classpathentry kind="lib" path="lib/junit-4.10.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
