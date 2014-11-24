@@ -2,10 +2,14 @@
 <project default="run" name="POS" basedir=".">
 
 	<!-- set global properties for this build -->
+
 	<property name="src.dir" location="src/" />
+	<property name="test.dir" value="${basedir}/test/" />
 
 	<property name="build.dir" location="build/" />
 	<property name="classes.dir" location="${build.dir}/classes/" />
+	<property name="build.test.dir" value="${build.dir}/test" />
+
 	<property name="jar.dir" location="${build.dir}/jar/" />
 	<property name="conf.dir" location="conf/" />
 	<property name="lib.dir" location="lib/" />
@@ -13,6 +17,8 @@
 	<property name="main-class" value="ee.ut.math.tvt.KAT.Intro" />
 	<property name="jar.name" value="KAT" />
 	<property name="version" location="version.properties" />
+
+
 
 	<!-- database variables -->
 	<property name="data.dir" value="${basedir}/data" />
@@ -22,11 +28,17 @@
 	<property name="lib.hibernate.dir" value="${lib.dir}/hibernate" />
 
 	<!-- Path reference for external libraries -->
-	<path id="compile.classpath">
+	<path id="libs">
 		<fileset dir="${lib.dir}">
 			<include name="*.jar" />
 		</fileset>
 		<fileset dir="${lib.hibernate.dir}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<path id="compile.classpath">
+		<fileset dir="${lib.dir}">
 			<include name="*.jar" />
 		</fileset>
 	</path>
@@ -38,6 +50,15 @@
 		<pathelement location="${conf.dir}" />
 	</path>
 
+	<path id="test.classpath">
+		<fileset dir="${lib.dir}">
+			<include name="*.jar" />
+		</fileset>
+		<pathelement path="${classes.dir}/" />
+		<pathelement path="${build.test.dir}/" />
+	</path>
+
+
 	<!-- Targets -->
 
 	<target name="clean" description="clean up">
@@ -46,6 +67,7 @@
 
 	<target name="build" description="Build the system">
 		<mkdir dir="${classes.dir}" />
+		<mkdir dir="${build.test.dir}" />
 		<javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false" classpathref="compile.classpath" />
 	</target>
 
@@ -148,5 +170,26 @@
 			<arg line="-database.0 '${db.file}' -dbname.0 '${db.alias}'" />
 		</java>
 	</target>
+
+	<target name="build-tests" depends="build" description="Build the system">
+		<javac srcdir="${test.dir}" destdir="${build.test.dir}" debug="true" includeantruntime="false" debuglevel="lines,vars,source" encoding="utf-8" compiler="modern" target="1.5" source="1.5" classpathref="test.classpath">
+			<classpath>
+				<pathelement path="${build.classes.dir}" />
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="test" depends="build-tests" description="Run the template application">
+		<junit>
+			<classpath refid="test.classpath" />
+
+			<formatter type="brief" usefile="false" />
+			<batchtest>
+				<fileset dir="${build.test.dir}" includes="**/*.class" />
+			</batchtest>
+		</junit>
+	</target>
+
+
 
 </project>
