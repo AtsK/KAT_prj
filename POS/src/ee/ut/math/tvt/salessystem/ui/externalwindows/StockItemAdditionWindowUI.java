@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -18,6 +19,8 @@ import org.apache.log4j.Logger;
 import com.jgoodies.looks.windows.WindowsLookAndFeel;
 
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
+import ee.ut.math.tvt.salessystem.domain.exception.DuplicateNameException;
+import ee.ut.math.tvt.salessystem.domain.exception.StockAvailabilityException;
 import ee.ut.math.tvt.salessystem.hibernate.HibernateDataService;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 
@@ -104,9 +107,17 @@ public class StockItemAdditionWindowUI extends JFrame {
 						.getText()), nameField.getText(), descriptionField
 						.getText(), Double.parseDouble(priceField.getText()),
 						Integer.parseInt(quantityField.getText()));
-				model.getWarehouseTableModel().addItem(addedItem);
-				HibernateDataService service = new HibernateDataService();
-				service.updateStockItem(addedItem);
+				try {
+					model.getWarehouseTableModel().addItem(addedItem);
+					HibernateDataService service = new HibernateDataService();
+					service.updateStockItem(addedItem);
+				} catch (StockAvailabilityException e1) {
+					log.error(e1.getMessage());
+				} catch (DuplicateNameException e1) {
+					JOptionPane.showMessageDialog(null,
+						e1.getMessage(),
+						"Error", JOptionPane.ERROR_MESSAGE);
+				}
 				dispose();
 			}
 		});

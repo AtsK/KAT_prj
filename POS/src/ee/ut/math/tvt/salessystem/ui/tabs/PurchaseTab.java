@@ -18,6 +18,7 @@ import org.apache.log4j.Logger;
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
+import ee.ut.math.tvt.salessystem.domain.exception.StockAvailabilityException;
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.hibernate.HibernateDataService;
 import ee.ut.math.tvt.salessystem.ui.externalwindows.ConfirmationWindowUI;
@@ -146,7 +147,8 @@ public class PurchaseTab {
 		}
 	}
 
-	/** Event handler for the <code>cancel purchase</code> event. */
+	/** Event handler for the <code>cancel purchase</code> event. 
+	 * @throws StockAvailabilityException */
 	protected void cancelPurchaseButtonClicked() {
 		log.info("Sale cancelled");
 		try {
@@ -159,8 +161,11 @@ public class PurchaseTab {
 				int quantity = stockItem.getQuantity()
 						+ model.getCurrentPurchaseTableModel()
 								.getItemById(curItem).getQuantity();
-				model.getWarehouseTableModel().setItemQuantity(stockItem,
-						quantity);
+				try {
+					stockItem.setQuantity(quantity);
+				} catch (StockAvailabilityException e) {
+					log.error(e.getMessage());
+				}
 				HibernateDataService service = new HibernateDataService();
 				service.updateStockItem(stockItem);
 			}

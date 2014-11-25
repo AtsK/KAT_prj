@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import ee.ut.math.tvt.salessystem.domain.exception.StockAvailabilityException;
+
 /**
  * Stock item. Corresponds to the Data Transfer Object design pattern.
  */
@@ -101,7 +103,10 @@ public class StockItem implements Cloneable, DisplayableItem {
 		return quantity;
 	}
 
-	public void setQuantity(int quantity) {
+	public void setQuantity(int quantity) throws StockAvailabilityException {
+		if (quantity < 0)
+			throw new StockAvailabilityException(
+					"Negative quantity was passed to stockItem.setQuantity");
 		this.quantity = quantity;
 	}
 

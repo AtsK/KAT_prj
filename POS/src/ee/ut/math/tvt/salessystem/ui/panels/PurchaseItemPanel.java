@@ -27,6 +27,7 @@ import org.apache.log4j.Logger;
 
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
+import ee.ut.math.tvt.salessystem.domain.exception.StockAvailabilityException;
 import ee.ut.math.tvt.salessystem.hibernate.HibernateDataService;
 import ee.ut.math.tvt.salessystem.ui.Utilities;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
@@ -253,18 +254,16 @@ public class PurchaseItemPanel extends JPanel {
 			}
 			int availableAmount = model.getWarehouseTableModel()
 					.getItemById(stockItem.getStockItemId()).getQuantity();
-			if (availableAmount >= quantity) {
+			try {
+				stockItem.setQuantity(availableAmount - quantity);
 				model.getCurrentPurchaseTableModel().addItem(
 						new SoldItem(stockItem, quantity));
-				model.getWarehouseTableModel().setItemQuantity(stockItem,
-						availableAmount - quantity);
 				HibernateDataService service = new HibernateDataService();
 				service.updateStockItem(stockItem);
-			} else {
+			} catch (StockAvailabilityException e) {
 				JOptionPane.showMessageDialog(null,
 						"Requested item amount exceeds availability!",
 						"Availability exceeded", JOptionPane.ERROR_MESSAGE);
-				;
 				log.info("Item: "
 						+ stockItem.getName()
 						+ " stock amount is lower than requested purchase amount");

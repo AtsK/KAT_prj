@@ -5,6 +5,8 @@ import java.util.NoSuchElementException;
 import org.apache.log4j.Logger;
 
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
+import ee.ut.math.tvt.salessystem.domain.exception.DuplicateNameException;
+import ee.ut.math.tvt.salessystem.domain.exception.StockAvailabilityException;
 
 /**
  * Stock item table model.
@@ -38,8 +40,10 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 	 * Add new stock item to table. If there already is a stock item with
 	 * same id, then existing item's quantity will be increased.
 	 * @param stockItem
+	 * @throws StockAvailabilityException 
+	 * @throws DuplicateNameException 
 	 */
-	public void addItem(final StockItem stockItem) {
+	public void addItem(final StockItem stockItem) throws StockAvailabilityException, DuplicateNameException {
 		try {
 			StockItem item = getItemById(stockItem.getStockItemId());
 			item.setQuantity(item.getQuantity() + stockItem.getQuantity());
@@ -47,9 +51,14 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 					+ " increased quantity by " + stockItem.getQuantity());
 		}
 		catch (NoSuchElementException e) {
-			rows.add(stockItem);
-			log.debug("Added " + stockItem.getName()
-					+ " quantity of " + stockItem.getQuantity());
+			try {
+				getItemByName(stockItem.getName());
+				throw new DuplicateNameException("Item with that name already exists.");
+			} catch (NoSuchElementException e1) {
+				rows.add(stockItem);
+				log.debug("Added " + stockItem.getName()
+						+ " quantity of " + stockItem.getQuantity());
+			}
 		}
 		
 		fireTableDataChanged();
@@ -73,9 +82,4 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 
 		return buffer.toString();
 	}
-	
-	public void setItemQuantity(StockItem item, int quantity) {
-		item.setQuantity(quantity);
-	}
-
 }
