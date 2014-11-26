@@ -38,10 +38,6 @@ public class Sale implements DisplayableItem {
     	this.soldItems = new ArrayList<SoldItem>();
     }
 
-    public Sale(List<SoldItem> goods) {
-        this.soldItems = new ArrayList<SoldItem>(goods);
-        this.sellingTime = new Date();
-    }
     public Sale(Client client) {
         this.client = client;
         this.soldItems = new ArrayList<SoldItem>();
@@ -77,11 +73,6 @@ public class Sale implements DisplayableItem {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public void addSoldItem(SoldItem item) {
-        item.setSale(this);
-        soldItems.add(item);
     }
 
     public double getSum() {

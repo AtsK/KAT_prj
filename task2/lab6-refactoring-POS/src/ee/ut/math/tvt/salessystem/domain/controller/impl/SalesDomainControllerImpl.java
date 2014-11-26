@@ -104,20 +104,8 @@ public class SalesDomainControllerImpl implements SalesDomainController {
         log.info("Current purchase canceled");
     }
 
-    public void startNewPurchase() {
-        // XXX - Start new purchase
-        log.info("New purchase started");
-    }
-
-
-
     public void setModel(SalesSystemModel model) {
         this.model = model;
-    }
-
-
-    public Sale getSale(Long id) {
-        return (Sale) session.get(Sale.class, id);
     }
 
     @Override

@@ -41,13 +41,6 @@ public class StockItem implements Cloneable, DisplayableItem {
      * @param price
      *            price of the product
      */
-    public StockItem(Long id, String name, String desc, double price) {
-        this.id = id;
-        this.name = name;
-        this.description = desc;
-        this.price = price;
-    }
-
     public StockItem(Long id, String name, String desc, double price,
             int quantity) {
         this.id = id;
@@ -114,26 +107,6 @@ public class StockItem implements Cloneable, DisplayableItem {
     public String toString() {
         // return id + " " + name + " " + description + " " + price;
         return name;
-    }
-
-    /**
-     * Method for querying the value of a certain column when StockItems are
-     * shown as table rows in the SalesSstemTableModel. The order of the columns
-     * is: id, name, price, quantity.
-     */
-    public Object getColumn(int columnIndex) {
-        switch (columnIndex) {
-        case 0:
-            return id;
-        case 1:
-            return name;
-        case 2:
-            return new Double(price);
-        case 3:
-            return new Integer(quantity);
-        default:
-            throw new RuntimeException("invalid column!");
-        }
     }
 
     @Override
