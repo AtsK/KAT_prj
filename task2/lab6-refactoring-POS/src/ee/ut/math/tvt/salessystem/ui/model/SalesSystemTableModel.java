@@ -61,12 +61,20 @@ public abstract class SalesSystemTableModel<T extends DisplayableItem> extends
     public abstract void clear();
 
     public void populateWithData(final List<T> data) {
-    	if (getTableRows() != null) getTableRows().clear();
+    	getTableRows().clear();
     	getTableRows().addAll(data);
     }
     
     public void addRow(T row) {
     	getTableRows().add(row);
         fireTableDataChanged();
+    }
+    
+    public T getRow(int index) {
+    	return getTableRows().get(index);
+    }
+    
+    public List<T> getRows() {
+    	return getTableRows();
     }
 }

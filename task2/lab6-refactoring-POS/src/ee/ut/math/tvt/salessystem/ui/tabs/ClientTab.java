@@ -35,9 +35,6 @@ public class ClientTab {
         return panel;
     }
 
-    
-
-    
     private Component drawClientsTable() {
 
         // Create the table 
@@ -64,6 +61,12 @@ public class ClientTab {
         gc.weightx = 1.0;
         gc.weighty = 1.0;
         return gc;
-    }    
+    }
+
+    public void refresh() {
+		model.getClientTableModel().populateWithData(
+				model.getDomainController().getAllClients());
+		model.getClientTableModel().fireTableDataChanged();
+	} 
     
 }

@@ -65,4 +65,5 @@ public class PurchaseHistoryTableModel extends SalesSystemTableModel<Sale> {
 		rows = new ArrayList<Sale>();
 		fireTableDataChanged();
 	}
+
 }

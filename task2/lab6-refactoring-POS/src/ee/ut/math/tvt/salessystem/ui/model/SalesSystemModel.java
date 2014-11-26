@@ -23,6 +23,8 @@ public class SalesSystemModel {
     private ClientTableModel clientTableModel;
 
     private Client selectedClient;
+    
+    private SalesDomainController domainController;
 
     /**
      * Construct application model.
@@ -34,6 +36,7 @@ public class SalesSystemModel {
         currentPurchaseTableModel = new PurchaseInfoTableModel(this);
         purchaseHistoryTableModel = new PurchaseHistoryTableModel();
         clientTableModel = new ClientTableModel();
+        this.domainController = domainController;
 
         // Load data from the database
 
@@ -75,6 +78,10 @@ public class SalesSystemModel {
 
     public void setSelectedClient(Client client) {
         this.selectedClient = client;
+    }
+    
+    public SalesDomainController getDomainController() {
+    	return domainController;
     }
 
 }
