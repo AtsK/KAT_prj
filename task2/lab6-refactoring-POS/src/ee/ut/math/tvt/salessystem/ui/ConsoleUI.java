@@ -127,16 +127,16 @@ public class ConsoleUI {
                 System.out.println("You must select a client first!");
                 return;
             }
-            try {
-                List<SoldItem> soldItems = new ArrayList<SoldItem>();
-                for(StockItem stockItem : cart) {
-                    soldItems.add(new SoldItem(stockItem, stockItem.getQuantity()));
-                }
-                dc.submitCurrentPurchase(soldItems, selectedClient);
-                cart.clear();
-            } catch (VerificationFailedException e) {
-                log.error(e.getMessage());
-            }
+//            try {
+//                List<SoldItem> soldItems = new ArrayList<SoldItem>();
+//                for(StockItem stockItem : cart) {
+//                    soldItems.add(new SoldItem(stockItem, stockItem.getQuantity()));
+//                }
+//                dc.submitCurrentPurchase(soldItems, selectedClient);
+//                cart.clear();
+//            } catch (VerificationFailedException e) {
+//                log.error(e.getMessage());
+//            }
 
         } else if (c[0].equals("r")) {
 
