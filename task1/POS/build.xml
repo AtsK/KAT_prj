@@ -173,7 +173,7 @@
 	</target>
 
 	<target name="build-tests" depends="build" description="Build the system">
-		<javac srcdir="${test.dir}" destdir="${build.test.dir}" debug="true" includeantruntime="false" debuglevel="lines,vars,source" encoding="utf-8" compiler="modern" target="1.5" source="1.5" classpathref="test.classpath">
+		<javac srcdir="${test.dir}" destdir="${build.test.dir}" debug="true" includeantruntime="false" debuglevel="lines,vars,source" encoding="utf-8" compiler="modern" classpathref="test.classpath">
 			<classpath>
 				<pathelement path="${build.classes.dir}" />
 			</classpath>
