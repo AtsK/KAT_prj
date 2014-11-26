@@ -86,7 +86,7 @@ public class SalesSystemUI extends JFrame {
   }
 
   private void drawWidgets() {
-    JTabbedPane tabbedPane = new JTabbedPane();
+    final JTabbedPane tabbedPane = new JTabbedPane();
 
     tabbedPane.add("Point-of-sale", purchaseTab.draw());
     tabbedPane.add("Warehouse", stockTab.draw());
@@ -96,10 +96,20 @@ public class SalesSystemUI extends JFrame {
     ChangeListener changeListener = new ChangeListener() {
 		@Override
 		public void stateChanged(ChangeEvent changeEvent) {
-			JTabbedPane sourceTabbedPane = (JTabbedPane) changeEvent.getSource();
-			stockTab.refresh();
-			historyTab.refresh();
-			clientTab.refresh();
+			int index = tabbedPane.getSelectedIndex();
+			switch (index) {
+			case 0:
+				break;
+			case 1:
+				stockTab.refresh();
+				break;
+			case 2:
+				historyTab.refresh();
+				break;
+			case 3:
+				clientTab.refresh();
+				break;
+			}
 	        
 		}
 	};
