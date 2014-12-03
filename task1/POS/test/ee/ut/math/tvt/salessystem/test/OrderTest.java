@@ -65,7 +65,7 @@ public class OrderTest {
 		
 	
 	@Test
-	public void testAddSoldItem(){
+	public void testAddSoldItem() {
 		List<SoldItem> solditems = new ArrayList<SoldItem>();
 		solditems = order4.getItems();
 		

@@ -21,6 +21,7 @@ public class StockItemTest {
 	@Test
 	public void testClone() {
 		item2 = (StockItem) item1.clone();
+		Assert.assertNotSame(item2, item1);
 		Assert.assertEquals(item1, item2);
 	}
 	
